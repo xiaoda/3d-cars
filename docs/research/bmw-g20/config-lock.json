@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "id": "g20-2024-blue-1152",
+  "status": "partial",
+  "reviewedOn": "2026-10-03",
+  "targetLabel": "2024 发布图组 BMW 330i G20 三厢蓝色样车，M Sport 可见外观",
+  "requestedMarket": "欧洲标准轴距；拍摄车具体市场未被图注确认",
+  "contexts": [
+    "g20-2024-blue-1152",
+    "g20-2024-330i-xdrive-base",
+    "g20-2024-family"
+  ],
+  "contextDescriptions": {
+    "g20-2024-blue-1152": "官图蓝色三厢样车；以多个视角的相同外观和车牌作为组图线索，不是 VIN 认证。",
+    "g20-2024-330i-xdrive-base": "2024 官方技术表第 11 页 330i xDrive 基础参数。",
+    "g20-2024-family": "G20 发布图组/德国市场系列说明；不能自动转用每项到拍摄车。"
+  },
+  "gate": {
+    "state": "needs-review",
+    "allowModeling": false,
+    "blockerIds": [
+      "U01",
+      "U02",
+      "U03"
+    ],
+    "reason": "资料审计交付已完成；精确配置和尺度适用性尚未锁定，未执行任务 2 及后续。"
+  },
+  "fitSourceIds": [
+    "P90549627",
+    "P90549630",
+    "P90549633",
+    "P90549635",
+    "P90549638",
+    "P90549639"
+  ],
+  "holdoutSourceIds": [
+    "P90549629",
+    "P90549631",
+    "P90549634",
+    "P90549636"
+  ],
+  "assertions": [
+    {
+      "id": "body-family",
+      "value": "G20 三厢；排除同图的 G21 Touring",
+      "status": "verified",
+      "sourceIds": [
+        "BMW2024_GALLERY",
+        "P90549614"
+      ]
+    },
+    {
+      "id": "publication-generation",
+      "value": "2024 年 5 月发布图组；不将发布日期直接命名为特定市场销售年款",
+      "status": "verified",
+      "sourceIds": [
+        "BMW2024_RELEASE",
+        "BMW2024_GALLERY"
+      ]
+    },
+    {
+      "id": "paint",
+      "value": "Arctic Race Blue metallic",
+      "status": "verified",
+      "sourceIds": [
+        "P90549614",
+        "BMW2024_GALLERY"
+      ]
+    },
+    {
+      "id": "wheel-style",
+      "value": "19 英寸 995M；不使用 791M/1038i 代替",
+      "status": "verified",
+      "sourceIds": [
+        "P90549614",
+        "BMW2024_GALLERY"
+      ]
+    },
+    {
+      "id": "front-tire",
+      "value": "225/40 R19（照片胎侧读取；不是后胎规格）",
+      "status": "observed",
+      "sourceIds": [
+        "P90549638"
+      ]
+    },
+    {
+      "id": "body-kit",
+      "value": "M Sport 风格前后保险杠、侧裙与翼子板 M 标；以官图可见外观为准",
+      "status": "observed",
+      "sourceIds": [
+        "P90549627",
+        "P90549630",
+        "P90549634"
+      ]
+    },
+    {
+      "id": "grille",
+      "value": "黑色双肾纵向条栅；下进气口为蜂窝，二者不能混用",
+      "status": "observed",
+      "sourceIds": [
+        "P90549639"
+      ]
+    },
+    {
+      "id": "light-appearance",
+      "value": "双折形白色日行灯和深色灯腔；外轮廓按参考图固定",
+      "status": "observed",
+      "sourceIds": [
+        "P90549637",
+        "P90549639"
+      ]
+    },
+    {
+      "id": "trim-appearance",
+      "value": "红色卡钳、黑窗框、小尾翼、双圆尾管",
+      "status": "observed",
+      "sourceIds": [
+        "P90549634",
+        "P90549638"
+      ]
+    },
+    {
+      "id": "pro-package",
+      "value": "可见组合与 Pro 描述部分相符，但这不是该车选装单证明",
+      "status": "inferred",
+      "sourceIds": [
+        "BMW_DE_2024_PRICE",
+        "P90549634",
+        "P90549638"
+      ]
+    },
+    {
+      "id": "powertrain",
+      "value": null,
+      "status": "unknown",
+      "sourceIds": [
+        "BMW2024_GALLERY",
+        "BMW2024_SPECS",
+        "BMW_DE_2024_PRICE"
+      ]
+    },
+    {
+      "id": "adaptive-led-option-code",
+      "value": null,
+      "status": "unknown",
+      "sourceIds": [
+        "BMW_DE_2024_PRICE",
+        "P90549639"
+      ]
+    },
+    {
+      "id": "exact-market-and-model-year",
+      "value": null,
+      "status": "unknown",
+      "sourceIds": [
+        "BMW2024_GALLERY"
+      ]
+    },
+    {
+      "id": "rear-tire-and-wheel-offset",
+      "value": null,
+      "status": "unknown",
+      "sourceIds": [
+        "P90549634"
+      ]
+    },
+    {
+      "id": "photographed-ride-height",
+      "value": null,
+      "status": "unknown",
+      "sourceIds": [
+        "BMW2024_SPECS",
+        "P90549635"
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "length",
+      "value": 4713,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "width-without-mirrors",
+      "value": 1827,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "height-unladen",
+      "value": 1445,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "wheelbase",
+      "value": 2851,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "track-front",
+      "value": 1573,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "track-rear",
+      "value": 1587,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    },
+    {
+      "id": "ground-clearance",
+      "value": 135,
+      "unit": "mm",
+      "appliesTo": "g20-2024-330i-xdrive-base",
+      "sourceId": "BMW2024_SPECS",
+      "page": 11,
+      "transferToReference": "pending"
+    }
+  ],
+  "excludedAlternatives": [
+    "G28 中国长轴",
+    "G21 Touring（包括 P90549614 红车）",
+    "M340i/M3",
+    "2022 规格混用于 2024 样车",
+    "P90462920/P90462921 设计效果图作为测量主证",
+    "未知版权的第三方车模"
+  ],
+  "proposedNextDecision": "建议以这辆官图样车的可见外观为固定目标，若接受保留动力/选装代码未知，则记录该范围调整后仅推进相机与骨架试验；不自动认定完整配置锁定。"
+}
