@@ -33,7 +33,7 @@ export default function CalibrationWorkspace(){
       <aside className="calibration-controls">
         <div className="specimen-id"><span>证据与形态</span><span>STUDY / 02</span></div>
         <h1>先对齐，<br/><em>再精修。</em></h1>
-        <p className="calibration-intro">A4 四视外形校准<br/>工具 V0.2 / 车模 V{MODEL_VERSION} · 座舱与分缝校正</p>
+        <p className="calibration-intro">A4 四视外形校准<br/>工具 V0.2 / 车模 V{MODEL_VERSION} · 车头开口与灯腔精修</p>
         <section className="calibration-section"><div className="section-title"><h2>正交机位</h2><span>锁定尺度</span></div>
           <div className="calibration-views">{CALIBRATION_VIEWS.map(v=><button key={v.id} onClick={()=>change({view:v.id})} aria-pressed={settings.view===v.id} className={settings.view===v.id?'active':''}><span>{v.code}</span>{v.name}<b>↗</b></button>)}</div>
         </section>

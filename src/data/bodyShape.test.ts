@@ -3,6 +3,13 @@ import {A4} from './a4';
 import {ROOF_PROFILE,SIDE_WINDOW_OUTLINE,interpolateProfile,roofHeight,cabinHalfWidth,warpBodyX,cabinSidePoint,clipWindow,windowSpan} from './bodyShape';
 
 describe('v0.3 人工形体参数与连续性',()=>{
+  it('前翼子板纵向收角入口没有趋于无穷的曲率尖峰',()=>{
+    const e=1e-5,x=-1.90;
+    for(const z of [.4,.75,.88]){
+      const second=(warpBodyX(x-2*e,z,.8)-2*warpBodyX(x-e,z,.8)+warpBodyX(x,z,.8))/(e*e);
+      expect(Math.abs(second)).toBeLessThan(40);
+    }
+  });
   it('有界三次插值通过控制点且不产生过冲',()=>{
     for(const [x,y] of ROOF_PROFILE)expect(roofHeight(x)).toBeCloseTo(y,8);
     for(let i=1;i<ROOF_PROFILE.length;i++){

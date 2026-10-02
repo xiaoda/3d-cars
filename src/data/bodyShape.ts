@@ -63,7 +63,8 @@ const smoothstep=(a:number,b:number,v:number)=>{const t=Math.max(0,Math.min(1,(v
 /** 前端中部较平，圆角集中在两侧；不移动车轮或拉伸图纸。 */
 export function warpBodyX(x:number,z:number,y=0):number {
   const q=Math.abs(z)/.93;
-  const front=Math.max(0,(-x-1.9)/.481)**1.16*(.024+.38*q**4);
+  // 有界二阶曲率的入口，代替 t^1.16 在 t=0 附近的曲率尖峰。
+  const t=Math.max(0,(-x-1.9)/.481),front=(1.12*t*t/(t+.12))*(.024+.38*q**4);
   const rear=Math.max(0,(x-1.85)/.531)**1.15*(.012+.135*q**4+.105*smoothstep(.75,1.05,y));
   return x+front-rear;
 }

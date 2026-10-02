@@ -7,7 +7,12 @@ const lerp=(a:number,b:number,t:number)=>a+(b-a)*t;
 const smooth=(a:number,b:number,x:number)=>{const t=clamp((x-a)/(b-a));return t*t*(3-2*t);};
 /** 预留 55 mm 的纵向过渡带，不把硬封口贴在车身截面末端。均为估算。 */
 export const BODY_END=A4.length/2-.055;
-const FILLET_START=.88;
+const filletStart=(end:-1|1)=>end===-1?.96:.88;
+/** 前缘收紧后仍分配八层网格给圆角，不能只改变参数却让圆角落在一层大面上。 */
+export function endCapRadius(end:-1|1,v:number){
+  if(end===1)return v;
+  const start=filletStart(end);return v<=.75?v/.75*start:start+(v-.75)/.25*(1-start);
+}
 /** 保险杠底部略上收，避免车尾像垂直到地面的方盒。非实测离地间隙。 */
 const sillHeight=(x:number)=>.185+.075*smooth(1.80,A4.length/2,x)+.040*smooth(1.9,A4.length/2,-x);
 export const bodyBottom=(x:number)=>Math.max(archBottom(x),sillHeight(x));
@@ -37,7 +42,7 @@ function makeRawSection(x:number){
   return (t:number):Point=>{
     const q=interpolateProfile(zp,clamp(t)),baseY=interpolateProfile(yp,clamp(t)),z=q*w;
     // 原 max(0,-x-1.90) 在翼子板起点引入斜率跳变。C1 权重在入口/端点均平缓收束。
-    const lift=smooth(1.78,A4.length/2,-x)*.125*q*q*clamp((baseY-sill)/(d-sill));
+    const lift=smooth(1.78,A4.length/2,-x)*.072*q*q*clamp((baseY-sill)/(d-sill));
     const y=baseY+lift;return [warpBodyX(x,z,y),y,z];
   };
 }
@@ -79,12 +84,13 @@ export const endPerimeter=(end:-1|1,u:number):Point=>perimeterAt(end*BODY_END,u)
 /** 内面 → 三次 Hermite 圆角带 → 侧面；交界处位置与切线共用。 */
 export function endCapPoint(end:-1|1,u:number,r:number):Point{
   const edge=endPerimeter(end,u),radial=(v:number)=>endFacePoint(end,edge[2]*v,.51+(edge[1]-.51)*v);
-  if(r<=FILLET_START)return radial(r);
-  const h=1-FILLET_START,t=(r-FILLET_START)/h,t2=t*t,t3=t2*t,e=1e-5;
-  const a=radial(FILLET_START),am=radial(FILLET_START-e),ap=radial(FILLET_START+e);
+  const start=filletStart(end);if(r<=start)return radial(r);
+  const h=1-start,t=(r-start)/h,t2=t*t,t3=t2*t,e=1e-5;
+  const a=radial(start),am=radial(start-e),ap=radial(start+e);
   const em=perimeterAt(end*BODY_END-e,u),ep=perimeterAt(end*BODY_END+e,u);
   return a.map((n,i)=>{
-    const da=(ap[i]-am[i])/(2*e)*h,db=-end*(ep[i]-em[i])/(2*e)*.070;
+    // 前缘圆角更窄时同步缩短端切线，避免 Hermite 带在投影中回折。
+    const da=(ap[i]-am[i])/(2*e)*h,db=-end*(ep[i]-em[i])/(2*e)*(end===-1?.018:.070);
     return (2*t3-3*t2+1)*n+(t3-2*t2+t)*da+(-2*t3+3*t2)*edge[i]+(t3-t2)*db;
   }) as Point;
 }

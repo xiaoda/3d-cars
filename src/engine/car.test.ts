@@ -4,6 +4,7 @@ import {buildCar} from './car';
 import {A4,AXLES,DEFAULT_SETTINGS} from '../data/a4';
 import {windowSpan} from '../data/bodyShape';
 import {BODY_STATIONS,bodySidePoint} from '../data/bodyShell';
+import {frontPoint,FRONT_DEPTH} from '../data/frontShape';
 import {windshieldPoint} from '../data/cabinSurface';
 
 describe('纯代码车模的几何与生命周期',()=>{
@@ -80,7 +81,7 @@ describe('纯代码车模的几何与生命周期',()=>{
     car.group.traverse(o=>{if(o instanceof T.Mesh){
       for(const attr of ['position','normal']){
         const a=o.geometry.getAttribute(attr);expect(a).toBeTruthy();
-        for(const n of a.array)expect(Number.isFinite(n)).toBe(true);
+        expect(Array.from(a.array).every(Number.isFinite),`${o.name} ${attr} 须全部有限`).toBe(true);
       }
       triangles+=(o.geometry.index?.count??o.geometry.getAttribute('position').count)/3;
     }});
@@ -94,16 +95,16 @@ describe('纯代码车模的几何与生命周期',()=>{
     expect(car.group.getObjectByName('后轮-1')!.rotation.y).toBe(0);
     car.update({...DEFAULT_SETTINGS,mode:'wire'});car.update(DEFAULT_SETTINGS);car.dispose();
   });
-  it('曲面格栅始终在保险杠之前，而非被大三角形遮挡',()=>{
+  it('格栅背板沉入真实开口，横向取样不被蒙皮挡住',()=>{
     const car=buildCar();car.group.updateMatrixWorld(true);
     const grille=car.group.getObjectByName('Singleframe 格栅')!;
-    const bumper=car.group.getObjectByName('前端封口')!;
+    const shell=[car.group.getObjectByName('前端封口')!,car.group.getObjectByName('车身连续曲面')!];
     for(const z of [-.4,-.2,0,.2,.4]) {
       const ray=new T.Raycaster(new T.Vector3(-5,.55,z),new T.Vector3(1,0,0));
-      const g=ray.intersectObject(grille)[0],b=ray.intersectObject(bumper)[0];
-      expect(g).toBeTruthy();expect(b).toBeTruthy();expect(g.distance).toBeLessThan(b.distance);
-    }
-    car.dispose();
+      const g=ray.intersectObject(grille)[0];expect(g).toBeTruthy();
+      expect(g.point.x-frontPoint(z,.55)[0]).toBeCloseTo(FRONT_DEPTH.grille,2);
+      ray.far=g.distance;expect(ray.intersectObjects(shell).length).toBe(0);
+    }car.dispose();
   });
   it('导出法线为单位向量，包含参数曲面极点',()=>{
     const car=buildCar();const invalid:string[]=[];
@@ -141,21 +142,27 @@ describe('纯代码车模的几何与生命周期',()=>{
     const car=buildCar();car.group.updateMatrixWorld(true);
     for(const side of [-1,1]){
       const front=new T.Raycaster(new T.Vector3(-5,.67,side*.65),new T.Vector3(1,0,0));
-      const f=front.intersectObject(car.group.getObjectByName(`前灯罩${side}`)!)[0],fb=front.intersectObject(car.group.getObjectByName('前端封口')!)[0];
-      expect(f).toBeTruthy();expect(fb).toBeTruthy();expect(f.distance).toBeLessThan(fb.distance);
+      const f=front.intersectObject(car.group.getObjectByName(`前灯罩${side}`)!)[0],back=front.intersectObject(car.group.getObjectByName(`前灯腔背板${side}`)!)[0];
+      expect(f).toBeTruthy();expect(back).toBeTruthy();expect(f.distance).toBeLessThan(back.distance);
       const rear=new T.Raycaster(new T.Vector3(5,.83,side*.65),new T.Vector3(-1,0,0));
       const r=rear.intersectObject(car.group.getObjectByName(`后灯罩${side}`)!)[0],rb=rear.intersectObject(car.group.getObjectByName('后端封口')!)[0];
       expect(r).toBeTruthy();expect(rb).toBeTruthy();expect(r.distance).toBeLessThan(rb.distance);
     }car.dispose();
   });
-  it('灯罩覆盖区域密集射线检查：背后有车身且没有蒙皮穿出',()=>{
+  it('灯罩密集射线：前灯有真实凹腔，后灯仍覆盖蒙皮',()=>{
     const car=buildCar();car.group.updateMatrixWorld(true);
     for(const [prefix,end] of [['前',-1],['后',1]] as const)for(const side of [-1,1]){
       const lamp=car.group.getObjectByName(`${prefix}灯罩${side}`)!;
       const shell=car.group.getObjectByName('车身连续曲面')!,cap=car.group.getObjectByName(`${prefix}端封口`)!;let samples=0;
       for(let y=.59;y<=.92;y+=.03)for(let z=.42;z<=.865;z+=.03){
         const ray=new T.Raycaster(new T.Vector3(end*5,y,side*z),new T.Vector3(-end,0,0)),hit=ray.intersectObject(lamp)[0];
-        if(!hit)continue;samples++;const body=ray.intersectObjects([shell,cap])[0];expect(body).toBeTruthy();expect(hit.distance).toBeLessThan(body.distance);
+        if(!hit)continue;samples++;
+        if(end===-1){
+          ray.far=5+frontPoint(side*z,y,FRONT_DEPTH.lamp+.015)[0];
+          expect(ray.intersectObjects([shell,cap]).length,`前灯 ${side} z=${z} y=${y}`).toBe(0);
+          const chamber=[`前灯腔背板${side}`,`前灯腔${side}内壁`,`前灯腔${side}倒角框`].map(name=>car.group.getObjectByName(name)!);
+          expect(ray.intersectObjects(chamber).length,`凹腔须封闭 ${side} z=${z} y=${y}`).toBeGreaterThan(0);
+        }else{const body=ray.intersectObjects([shell,cap])[0];expect(body).toBeTruthy();expect(hit.distance).toBeLessThan(body.distance);}
       }
       expect(samples).toBeGreaterThan(30);
     }car.dispose();

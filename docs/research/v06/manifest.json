@@ -1,0 +1,74 @@
+{
+  "frozen": [
+    {
+      "path": "public/references/audi-a4-dimensions.pdf",
+      "sha256": "4f733bff3c350f1a86aeb9f3e38a617d24cce9bc2275d0b4c9f73b70d451a429"
+    },
+    {
+      "path": "public/references/audi-a4-dimensions.png",
+      "sha256": "e82402dbfcd99b1932bc64feec9b471ea5f5a52704c2c4c5056be34c1ced073d"
+    },
+    {
+      "path": "src/data/calibration.ts",
+      "sha256": "f8ed99ead2487aa9e8a31e817becccdabbf1098f1ff063f296c54a5f9ac25ff7"
+    },
+    {
+      "path": "src/data/bodyEvidence.json",
+      "sha256": "e00fe2b7359a2f9976b440fee654f6eb2a2bb7a7f1828112355c0fdb53a84ed0"
+    },
+    {
+      "path": "src/data/cabinEvidence.json",
+      "sha256": "2472875984067e40182cc5f1606b75a4d9a8064678d5907a6e785421e5aa4fc0"
+    },
+    {
+      "path": "src/data/cabinSurface.ts",
+      "sha256": "e2055e9d0b8f8836b31edc2007f2821c0474ae5b7270f16d74f9201d3231ac7e"
+    },
+    {
+      "path": "src/engine/studio.ts",
+      "sha256": "fab3c4e41e2cf9256947ac097831ad5a8a9932e9933cb50b2089e999b8ce4efb"
+    }
+  ],
+  "rearCamera": [
+    6.5,
+    2.35,
+    -6
+  ],
+  "baseline": "3955029",
+  "target": [
+    0,
+    0.7,
+    0
+  ],
+  "version": "0.6",
+  "preview": {
+    "stderr": ".runtime/v05/vite.stderr.log",
+    "stdout": ".runtime/v05/vite.stdout.log",
+    "cwd": "D:\\Projects-X\\3D-Cars",
+    "url": "http://127.0.0.1:52254",
+    "reused": true,
+    "pid": 15416
+  },
+  "frontCamera": [
+    -6.5,
+    2.6,
+    6
+  ],
+  "browser": {
+    "desktop": "1440x1000x1",
+    "isolatedContext": "a4-v06-20261003-6c8ad2",
+    "mobile": "390x844x1,mobile,touch",
+    "pageId": 3
+  },
+  "settings": {
+    "rotate": false,
+    "paint": "graphite",
+    "dimensions": false,
+    "lights": false,
+    "steering": 0
+  },
+  "sourceNote": "04/19 图纸为造型主依据，完整动力及外观套件未核定；三维腔深为估算。",
+  "source": "https://www.audi.com/en/the-audi-a4-major-upgrade-for-the-bestseller-2019-11884/the-design-11889",
+  "date": "2026-10-03",
+  "storageNote": "只存验证元数据。默认截图和内存 PNG 实际查看，未归档新图片或 GLB。"
+}

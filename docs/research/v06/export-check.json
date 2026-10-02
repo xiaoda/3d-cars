@@ -1,0 +1,236 @@
+{
+  "version": "0.6",
+  "glb": {
+    "version": "0.6",
+    "bytes": 6424068,
+    "headerVersion": 2,
+    "headerLength": 6424068,
+    "meshes": 323,
+    "triangles": 225044,
+    "badNormals": 0,
+    "nonFinite": 0,
+    "metadata": [
+      {
+        "name": "Audi A4 · 程序化外观研究",
+        "source": "依据 Audi 官方 04/19 尺寸图的程序化近似；非原厂模型",
+        "modelVersion": "0.6",
+        "units": "metres",
+        "coordinateSystem": "X longitudinal (front negative), Y up, Z lateral"
+      }
+    ],
+    "paint": "294f69",
+    "metalness": 0.68,
+    "roughness": 0.29,
+    "frontSteering": 0.2617993877991494,
+    "rearSteering": 0,
+    "lens": {
+      "transparent": true,
+      "opacity": 0.15,
+      "visible": true
+    },
+    "chambers": [
+      "格栅内壁",
+      "前号牌安装座",
+      "前灯腔-1内壁",
+      "前灯腔背板-1",
+      "灯内反射杯-1-0",
+      "灯内反射杯-1-1",
+      "进气口-1内壁",
+      "前灯腔1内壁",
+      "前灯腔背板1",
+      "灯内反射杯1-0",
+      "灯内反射杯1-1",
+      "进气口1内壁"
+    ],
+    "reflectorNormals": [
+      -0.618573009967804,
+      -0.618573009967804
+    ],
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "pngs": [
+    {
+      "name": "front-paint",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 376584,
+      "view": "hero",
+      "settings": {
+        "mode": "paint",
+        "paint": "graphite",
+        "lights": false,
+        "steering": 0,
+        "rotate": false,
+        "dimensions": false
+      },
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "software": false,
+      "triangles": 225044,
+      "renderTriangles": 382050,
+      "drawCalls": 538,
+      "camera": [
+        -6.500000000000001,
+        2.6000000000000005,
+        6
+      ],
+      "target": [
+        0,
+        0.7,
+        0
+      ]
+    },
+    {
+      "name": "front-clay",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 254584,
+      "view": "hero",
+      "settings": {
+        "mode": "clay",
+        "paint": "graphite",
+        "lights": false,
+        "steering": 0,
+        "rotate": false,
+        "dimensions": false
+      },
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "software": false,
+      "triangles": 225044,
+      "renderTriangles": 380150,
+      "drawCalls": 534,
+      "camera": [
+        -6.500000000000001,
+        2.6000000000000005,
+        6
+      ],
+      "target": [
+        0,
+        0.7,
+        0
+      ]
+    },
+    {
+      "name": "rear-paint",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 356703,
+      "view": "hero",
+      "settings": {
+        "mode": "paint",
+        "paint": "graphite",
+        "lights": false,
+        "steering": 0,
+        "rotate": false,
+        "dimensions": false
+      },
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "software": false,
+      "triangles": 225044,
+      "renderTriangles": 382050,
+      "drawCalls": 538,
+      "camera": [
+        6.5,
+        2.3499999999999996,
+        -6
+      ],
+      "target": [
+        0,
+        0.7,
+        0
+      ]
+    },
+    {
+      "name": "rear-clay",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 251527,
+      "view": "hero",
+      "settings": {
+        "mode": "clay",
+        "paint": "graphite",
+        "lights": false,
+        "steering": 0,
+        "rotate": false,
+        "dimensions": false
+      },
+      "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "software": false,
+      "triangles": 225044,
+      "renderTriangles": 380150,
+      "drawCalls": 534,
+      "camera": [
+        6.5,
+        2.3499999999999996,
+        -6
+      ],
+      "target": [
+        0,
+        0.7,
+        0
+      ]
+    }
+  ],
+  "calibrationPngs": [
+    {
+      "view": "side",
+      "bytes": 941794,
+      "width": 1920,
+      "height": 1080,
+      "steering": 0,
+      "ready": true,
+      "contextLost": false,
+      "settings": {
+        "view": "side",
+        "mode": "overlay",
+        "opacity": 0.8,
+        "points": true
+      }
+    },
+    {
+      "view": "front",
+      "bytes": 720542,
+      "width": 1920,
+      "height": 1080,
+      "steering": 0,
+      "ready": true,
+      "contextLost": false,
+      "settings": {
+        "view": "front",
+        "mode": "overlay",
+        "opacity": 0.8,
+        "points": true
+      }
+    },
+    {
+      "view": "rear",
+      "bytes": 635694,
+      "width": 1920,
+      "height": 1080,
+      "steering": 0,
+      "ready": true,
+      "contextLost": false,
+      "settings": {
+        "view": "rear",
+        "mode": "overlay",
+        "opacity": 0.8,
+        "points": true
+      }
+    },
+    {
+      "view": "top",
+      "bytes": 1120071,
+      "width": 1920,
+      "height": 1080,
+      "steering": 0,
+      "ready": true,
+      "contextLost": false,
+      "settings": {
+        "view": "top",
+        "mode": "overlay",
+        "opacity": 0.8,
+        "points": true
+      }
+    }
+  ],
+  "storageNote": "PNG / GLB 均在浏览器内存生成并解码回读；这里只归档验证元数据，不代表二进制文件已保存。默认截图和导出图已实际查看，未绕过浏览器指定文件路径限制。"
+}

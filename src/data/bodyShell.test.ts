@@ -5,6 +5,15 @@ import {BODY_END,bodySection,bodySidePoint,bodyTopPoint,endCapPoint,endPerimeter
 const delta=(a:number[],b:number[])=>a.map((v,i)=>v-b[i]);
 const unit=(a:number[])=>{const n=Math.hypot(...a);return a.map(v=>v/n);};
 describe('v0.4 连续车身截面与圆角封口',()=>{
+  it('前缘横向鼓包受控，前端内面保持到 96% 再收边',()=>{
+    const center=rawSection(-2.30,0),shoulder=rawSection(-2.30,.34);
+    expect(shoulder[1]-center[1]).toBeLessThan(.020);
+    for(const u of [.24,.36,.42,.55,.60]){
+      const edge=endPerimeter(-1,u),p=endCapPoint(-1,u,.95);
+      expect(p[1]).toBeCloseTo(.51+(edge[1]-.51)*.95,8);
+      expect(p[2]).toBeCloseTo(edge[2]*.95,8);
+    }
+  });
   it('机盖前角抬升在入口处一阶连续，消除 x=-1.90 的额外折痕',()=>{
     const e=1e-5,x=-1.90;
     for(const t of [.18,.34,.48,.56]){
@@ -25,7 +34,7 @@ describe('v0.4 连续车身截面与圆角封口',()=>{
   it('饰件投影能反求圆角带上的位置，对轮廓外点显式拒绝',()=>{
     for(const end of [-1,1] as const)for(const u of [.12,.24,.36,.59,.70,.77,.89])for(const r of [.3,.89,.94,.98]){
       const p=endCapPoint(end,u,r),q=endSurfacePoint(end,p[2],p[1]);
-      expect(Math.hypot(...delta(p,q))).toBeLessThan(1e-5);
+      expect(Math.hypot(...delta(p,q)),`end=${end} u=${u} r=${r} p=${p} q=${q}`).toBeLessThan(1e-5);
     }
     expect(()=>endSurfacePoint(1,2,1)).toThrow('超出');
     expect(()=>endSurfacePoint(1,NaN,1)).toThrow('有限值');
