@@ -1,0 +1,98 @@
+{
+  "checkedAt": "2026-10-02",
+  "scope": "仅本地研究；公开可见不等于三维模型或商业再分发授权。",
+  "photos": [
+    {
+      "id": 114018,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226712\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114018",
+      "asset": "https://uploads.audi.com/system/production/media/114018/images/61f3c2510b948483f89a8c588fa0c04be3caf0ea/A226712_web_1440.jpeg?1731490562",
+      "local": "public/references/2022/A226712_web_1440.jpeg",
+      "sha256": "de040095045dea28b52c690e24cb47311ff7aef8a83e1076b97a77e66b738f03",
+      "bytes": 161761
+    },
+    {
+      "id": 114010,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226704\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114010",
+      "asset": "https://uploads.audi.com/system/production/media/114010/images/2b377842dcaa55eab967c8861c433539d1d3ad9d/A226704_web_1440.jpeg?1731490598",
+      "local": "public/references/2022/A226704_web_1440.jpeg",
+      "sha256": "8dac47ff3c4b1fe4631d657d6a02512dcf5d9799e2f10e63f366c53a412358c7",
+      "bytes": 161485
+    },
+    {
+      "id": 114011,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226705\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114011",
+      "asset": "https://uploads.audi.com/system/production/media/114011/images/ac3aa321f3c5243f6e230714024e18de48015e5b/A226705_web_1440.jpeg?1731490594",
+      "local": "public/references/2022/A226705_web_1440.jpeg",
+      "sha256": "28ba08e4a94be58a73d2bcab003f6e5f036d735fcaa67c04d1cf46eac7c56b26",
+      "bytes": 155843
+    },
+    {
+      "id": 114012,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226706\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114012",
+      "asset": "https://uploads.audi.com/system/production/media/114012/images/ca8b0603a1725bc63eb7ccba869f2a462e80d0c8/A226706_web_1440.jpeg?1731490569",
+      "local": "public/references/2022/A226706_web_1440.jpeg",
+      "sha256": "844f0a55261f1aa1430c3021ddbe56fb5bb087ad4d3490928fb9fedcb4ee60d3",
+      "bytes": 185121
+    },
+    {
+      "id": 114015,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226709\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114015",
+      "asset": "https://uploads.audi.com/system/production/media/114015/images/de673d26707efc677ec1607652902145d76ae1ef/A226709_web_1440.jpeg?1731490596",
+      "local": "public/references/2022/A226709_web_1440.jpeg",
+      "sha256": "0012005849a66aa766dd7fa2eb2a428a26d3bcfdd373c323ce60396102ab5d86",
+      "bytes": 175177
+    },
+    {
+      "id": 114016,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Static photo, Colour: District Green Metallic",
+      "date": "11/29/2022",
+      "details": "Image No:\nA226710\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-114016",
+      "asset": "https://uploads.audi.com/system/production/media/114016/images/c5b368bd5901ee2daa2290ded5e4303dea651662/A226710_web_1440.jpeg?1731490593",
+      "local": "public/references/2022/A226710_web_1440.jpeg",
+      "sha256": "b4677e5364242797c9513ac574741959615a0bb4db3a8f92d6ab94c22e1aaa3a",
+      "bytes": 171569
+    },
+    {
+      "id": 77769,
+      "alt": "Audi Å4 Sedan (from 2019 to 2024) - Cockpit",
+      "date": "05/15/2019",
+      "details": "Image No:\nA195684\n·\nCopyright:\nAUDI AG Rights:\nUse for editorial purposes free of charge",
+      "url": "https://www.audi.com/en/photos/detail/audi-a4-sedan-from-2019-to-2024-77769",
+      "asset": "https://uploads.audi.com/system/production/media/77769/images/add8763c3f36bfe917181927e4f18b7452ea75ba/A195684_web_1440.jpg?1731490602",
+      "local": "public/references/2019/A195684_web_1440.jpg",
+      "sha256": "0491897078532ad358b773bd56e701cc9458795cd80338e8bc5115c59a25cc0b",
+      "bytes": 183791
+    }
+  ],
+  "dimensions": {
+    "source": "https://www.audi-mediacenter.com/en/publications/dimensions/dimensions-a4-1391/download",
+    "printedDate": "04/19",
+    "local": "public/references/audi-a4-dimensions.pdf",
+    "sha256": "4f733bff3c350f1a86aeb9f3e38a617d24cce9bc2275d0b4c9f73b70d451a429"
+  },
+  "derivedRaster": {
+    "local": "public/references/audi-a4-dimensions.png",
+    "dimensions": [
+      1191,
+      1684
+    ],
+    "sha256": "e82402dbfcd99b1932bc64feec9b471ea5f5a52704c2c4c5056be34c1ced073d",
+    "role": "原始 PDF 的整页栅格化；四视窗口只在显示时裁切"
+  }
+}
