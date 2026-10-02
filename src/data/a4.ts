@@ -8,8 +8,8 @@ export const A4 = Object.freeze({
 });
 export const AXLES = Object.freeze({ front: -A4.length / 2 + A4.frontOverhang, rear: A4.length / 2 - A4.rearOverhang });
 export const SOURCE_URL = 'https://www.audi-mediacenter.com/en/publications/dimensions/dimensions-a4-1391/download';
-export const MODEL_VERSION='0.4';
-export const MODEL_FILE_TAG='v04';
+export const MODEL_VERSION='0.5';
+export const MODEL_FILE_TAG='v05';
 
 /** 以下截面系依据官方侧/俯视轮廓手动估算：[纵坐标, 半宽, 车身上表面中心高度]。 */
 const sections = [

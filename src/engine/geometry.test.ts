@@ -1,8 +1,21 @@
 import {describe,it,expect} from 'vitest';
-import {mapPolyline,surface,curvedPanel} from './geometry';
+import {mapPolyline,surface,curvedPanel,reverseFaces} from './geometry';
 import {warpBodyX} from '../data/bodyShape';
 
 describe('先采样后映射的曲面饰条',()=>{
+  it('翻转索引及非索引网格时保持 UV 对应，连续翻转两次恢复原网格',()=>{
+    const indexed=surface((u,v)=>[u,0,v],3,2),nonIndexed=indexed.toNonIndexed();
+    for(const g of [indexed,nonIndexed]){
+      const before=Object.fromEntries(Object.entries(g.attributes).map(([key,a])=>[key,Array.from(a.array)])),indices=g.index?Array.from(g.index.array):null;
+      const y=g.getAttribute('normal').getY(0);reverseFaces(g);
+      expect(g.getAttribute('normal').getY(0)).toBe(-y);
+      if(indices)expect(g.index!.getX(1)).toBe(indices[2]);
+      else expect(g.getAttribute('uv').getX(1)).toBe(before.uv[4]);
+      reverseFaces(g);
+      for(const [key,a] of Object.entries(g.attributes))expect(Array.from(a.array)).toEqual(before[key]);
+      if(indices)expect(Array.from(g.index!.array)).toEqual(indices);g.dispose();
+    }
+  });
   it('细分贴面可使用解析映射法线，不把高光切成独立三角面',()=>{
     const g=curvedPanel([[0,0],[1,0],[1,1],[0,1]],(z,y)=>[z*z,y,z],{maxEdge:.1,analyticNormals:true});
     const p=g.getAttribute('position'),n=g.getAttribute('normal');

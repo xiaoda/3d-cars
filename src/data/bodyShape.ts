@@ -28,12 +28,14 @@ export const roofHeight=(x:number)=>interpolateProfile(ROOF_PROFILE,x);
 export const CABIN_RANGE=[-1.05,1.88] as const;
 export function cabinHalfWidth(x:number,y:number){
   const rearTaper=Math.max(0,x-.75)*.052;
-  return .802-(y-1)*.53-rearTaper;
+  const rise=y-1;
+  // 原线性侧框像一块平板；保留上窄下宽，增加微小外凸并放宽上部收束。
+  return .802-rise*.49+.010*Math.sin(Math.PI*Math.max(0,Math.min(1,rise/.44)))-rearTaper;
 }
 export function roofCrown(x:number){return .024*Math.min(1,Math.max(0,(roofHeight(x)-1.0)/.16));}
 export function roofPoint(x:number,q:number,offset=0):[number,number,number]{
   const h=roofHeight(x),edge=h-roofCrown(x);
-  return [x,h-roofCrown(x)*q*q+offset,cabinHalfWidth(x,edge)*q];
+  return [x,h-roofCrown(x)*(.4*q*q+.6*q**10)+offset,cabinHalfWidth(x,edge)*q];
 }
 export function cabinSidePoint(x:number,y:number,side:number,offset=0):[number,number,number]{
   return [x,y,side*(cabinHalfWidth(x,y)+offset)];

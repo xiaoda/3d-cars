@@ -36,7 +36,8 @@ function makeRawSection(x:number){
   const zp:Profile=keys.map(([t,z])=>[t,z]),yp:Profile=keys.map(([t,,y])=>[t,y]);
   return (t:number):Point=>{
     const q=interpolateProfile(zp,clamp(t)),baseY=interpolateProfile(yp,clamp(t)),z=q*w;
-    const lift=Math.max(0,(-x-1.90)/.481)*.17*q*q*clamp((baseY-sill)/(d-sill));
+    // 原 max(0,-x-1.90) 在翼子板起点引入斜率跳变。C1 权重在入口/端点均平缓收束。
+    const lift=smooth(1.78,A4.length/2,-x)*.125*q*q*clamp((baseY-sill)/(d-sill));
     const y=baseY+lift;return [warpBodyX(x,z,y),y,z];
   };
 }
@@ -50,6 +51,14 @@ export function makeBodySection(x:number):(v:number)=>Point{
   return (v:number)=>{const q=Math.abs(2*v-1),t=q<=.62?q:.62+(q-.62)/.38*(limit-.62),p=raw(t);return [p[0],p[1],v<.5?-p[2]:p[2]];};
 }
 export const bodySection=(x:number,v:number):Point=>makeBodySection(x)(v);
+
+/** 由上半部横向比例求蒙皮点，机盖边界不再随意选择截面网格索引。 */
+export function bodyTopPoint(x:number,widthFraction:number,offset=.0015):Point{
+  if(!Number.isFinite(x)||!Number.isFinite(widthFraction)||Math.abs(widthFraction)>1)throw new Error('顶面坐标必须有限，宽度比例须在 [-1,1]');
+  const raw=makeRawSection(x),target=halfWidth(x)*Math.abs(widthFraction);let a=0,b=.56;
+  for(let i=0;i<28;i++){const t=(a+b)/2;if(raw(t)[2]<target)a=t;else b=t;}
+  const p=raw((a+b)/2);return [p[0],p[1]+offset,Math.sign(widthFraction)*p[2]];
+}
 
 export function bodySidePoint(x:number,y:number,side:number,offset=.002):Point{
   const raw=makeRawSection(x),bottom=bodyBottom(x),target=Math.max(bottom,y);

@@ -4,8 +4,26 @@ import {buildCar} from './car';
 import {A4,AXLES,DEFAULT_SETTINGS} from '../data/a4';
 import {windowSpan} from '../data/bodyShape';
 import {BODY_STATIONS,bodySidePoint} from '../data/bodyShell';
+import {windshieldPoint} from '../data/cabinSurface';
 
 describe('纯代码车模的几何与生命周期',()=>{
+  it('前后玻璃与车顶法线朝上，玻璃和密封不被底层车顶遮挡',()=>{
+    const car=buildCar();car.group.updateMatrixWorld(true);
+    const roof=car.group.getObjectByName('车顶与前后柱曲面') as T.Mesh;
+    const n=roof.geometry.getAttribute('normal');expect(n.getY(70*41+20)).toBeGreaterThan(.98);
+    for(const [name,end] of [['前挡风玻璃',-1],['后挡风玻璃',1]] as const){
+      const glass=car.group.getObjectByName(name) as T.Mesh,normal=glass.geometry.getAttribute('normal');
+      expect(normal.getY(28*37+18)).toBeGreaterThan(.6);
+      expect(car.group.getObjectByName(`${name}密封`)).toBeTruthy();
+      for(const u of [.15,.4,.65,.85])for(const v of [.15,.5,.85]){
+        const p=windshieldPoint(end,u,v),ray=new T.Raycaster(new T.Vector3(p[0],3,p[2]),new T.Vector3(0,-1,0));
+        const g=ray.intersectObject(glass)[0],r=ray.intersectObject(roof)[0];
+        expect(g).toBeTruthy();expect(r).toBeTruthy();expect(g.distance).toBeLessThan(r.distance);
+      }
+    }
+    for(const side of [-1,1])expect(car.group.getObjectByName(`侧窗-${side}-2`)).toBeTruthy();
+    car.dispose();
+  });
   it('新车身与端面法线朝外，轮拱收边位于共享截面上',()=>{
     const car=buildCar(),body=car.group.getObjectByName('车身连续曲面') as T.Mesh;
     const normals=body.geometry.getAttribute('normal');
@@ -103,8 +121,21 @@ describe('纯代码车模的几何与生命周期',()=>{
       const frame=ray.intersectObject(car.group.getObjectByName('座舱侧框1')!)[0];
       expect(glass).toBeTruthy();expect(frame).toBeTruthy();expect(glass.distance).toBeLessThan(frame.distance);
     }
-    const b=new T.Box3().setFromObject(car.group.getObjectByName('B柱1')!);
-    expect(b.max.y).toBeLessThanOrEqual(Math.max(windowSpan(.30)[1],windowSpan(.375)[1])+1e-6);car.dispose();
+    const b=car.group.getObjectByName('B柱1') as T.Mesh,p=b.geometry.getAttribute('position');
+    // B 柱已按侧窗斜置；逐顶点对照所在 x 的原始图线，而非旧固定 x=.30/.375。
+    for(let i=0;i<p.count;i++){
+      const [bottom,top]=windowSpan(p.getX(i));
+      expect(p.getY(i)).toBeLessThanOrEqual(top+1e-6);expect(p.getY(i)).toBeGreaterThanOrEqual(bottom-1e-6);
+    }
+    car.dispose();
+  });
+  it('左右座舱侧框和各块玻璃法线均朝外',()=>{
+    const car=buildCar();
+    for(const side of [-1,1])for(const name of [`座舱侧框${side}`,`侧窗-${side}-0`,`侧窗-${side}-1`,`侧窗-${side}-2`]){
+      const mesh=car.group.getObjectByName(name) as T.Mesh,n=mesh.geometry.getAttribute('normal');
+      for(let i=0;i<n.count;i+=19)expect(n.getZ(i)*side,`${name} 法线 ${i}`).toBeGreaterThan(.6);
+    }
+    car.dispose();
   });
   it('前后灯罩跟随新保险杠曲面，不被车身遮住',()=>{
     const car=buildCar();car.group.updateMatrixWorld(true);

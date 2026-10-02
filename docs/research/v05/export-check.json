@@ -1,0 +1,84 @@
+{
+  "version": "0.5",
+  "glb": {
+    "bytes": 6061984,
+    "headerVersion": 2,
+    "headerLength": 6061984,
+    "meshes": 305,
+    "triangles": 225730,
+    "badNormals": 0,
+    "nonFinite": 0,
+    "metadata": [
+      {
+        "name": "Audi A4 · 程序化外观研究",
+        "source": "依据 Audi 官方 04/19 尺寸图的程序化近似；非原厂模型",
+        "modelVersion": "0.5",
+        "units": "metres",
+        "coordinateSystem": "X longitudinal (front negative), Y up, Z lateral"
+      }
+    ],
+    "paint": "294f69",
+    "metalness": 0.68,
+    "roughness": 0.29,
+    "frontSteering": 0.2617993877991494,
+    "rearSteering": 0
+  },
+  "pngs": [
+    {
+      "name": "front-paint",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 380506
+    },
+    {
+      "name": "front-clay",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 260151
+    },
+    {
+      "name": "rear-paint",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 357293
+    },
+    {
+      "name": "rear-clay",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 251814
+    }
+  ],
+  "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "storageNote": "PNG/GLB 在浏览器内存导出并解码回读；本文件仅记录结果，不声称已归档二进制文件。截图按默认工具输出实际查看，指定项目路径保存被工具工作区限制拒绝后未绕过。",
+  "calibrationPngs": [
+    {
+      "view": "side",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 945908,
+      "steering": 0
+    },
+    {
+      "view": "front",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 743599,
+      "steering": 0
+    },
+    {
+      "view": "rear",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 637946,
+      "steering": 0
+    },
+    {
+      "view": "top",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 1128066,
+      "steering": 0
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "baselineCommit": "124bfa53650f6ec8a4d2406a5ab94b93b90bbdcf",
+  "frozen": [
+    {
+      "file": "public/references/audi-a4-dimensions.pdf",
+      "sha256": "4f733bff3c350f1a86aeb9f3e38a617d24cce9bc2275d0b4c9f73b70d451a429",
+      "matchesBaselineContent": true
+    },
+    {
+      "file": "public/references/audi-a4-dimensions.png",
+      "sha256": "e82402dbfcd99b1932bc64feec9b471ea5f5a52704c2c4c5056be34c1ced073d",
+      "matchesBaselineContent": true
+    },
+    {
+      "file": "src/data/calibration.ts",
+      "sha256": "f8ed99ead2487aa9e8a31e817becccdabbf1098f1ff063f296c54a5f9ac25ff7",
+      "matchesBaselineContent": true
+    },
+    {
+      "file": "src/data/bodyEvidence.json",
+      "sha256": "e00fe2b7359a2f9976b440fee654f6eb2a2bb7a7f1828112355c0fdb53a84ed0",
+      "matchesBaselineContent": true
+    },
+    {
+      "file": "src/engine/studio.ts",
+      "sha256": "fab3c4e41e2cf9256947ac097831ad5a8a9932e9933cb50b2089e999b8ce4efb",
+      "matchesBaselineContent": true
+    }
+  ],
+  "a4DataUnchangedExceptVersion": true,
+  "longitudinalRoofProfileUnchanged": true,
+  "lightingAndExposureUnchanged": true,
+  "newEvidence": {
+    "file": "src/data/cabinEvidence.json",
+    "sha256": "2472875984067e40182cc5f1606b75a4d9a8064678d5907a6e785421e5aa4fc0"
+  },
+  "inspection": {
+    "frontCamera": [
+      -6.5,
+      2.6,
+      6
+    ],
+    "rearCamera": [
+      6.5,
+      2.35,
+      -6
+    ],
+    "target": [
+      0,
+      0.7,
+      0
+    ],
+    "paint": "graphite",
+    "modes": [
+      "paint",
+      "clay"
+    ],
+    "lights": false,
+    "steering": 0,
+    "calibrationOpacity": 0.8
+  },
+  "imageArchive": "v0.4 baseline images remain untouched in docs/research/v04; new exports inspected in memory and tool output, not saved to repository due to browser tool workspace restriction."
+}

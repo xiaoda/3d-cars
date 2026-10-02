@@ -1,10 +1,27 @@
 import {describe,it,expect} from 'vitest';
 import {A4,AXLES,archBottom,halfWidth} from './a4';
-import {BODY_END,bodySection,bodySidePoint,endCapPoint,endPerimeter,endSurfacePoint,rawSection} from './bodyShell';
+import {BODY_END,bodySection,bodySidePoint,bodyTopPoint,endCapPoint,endPerimeter,endSurfacePoint,rawSection} from './bodyShell';
 
 const delta=(a:number[],b:number[])=>a.map((v,i)=>v-b[i]);
 const unit=(a:number[])=>{const n=Math.hypot(...a);return a.map(v=>v/n);};
 describe('v0.4 连续车身截面与圆角封口',()=>{
+  it('机盖前角抬升在入口处一阶连续，消除 x=-1.90 的额外折痕',()=>{
+    const e=1e-5,x=-1.90;
+    for(const t of [.18,.34,.48,.56]){
+      const a=rawSection(x-e,t),b=rawSection(x,t),c=rawSection(x+e,t);
+      expect(Math.abs((b[1]-a[1])/e-(c[1]-b[1])/e)).toBeLessThan(.003);
+    }
+  });
+  it('顶面定位保持真实宽度比例并与横截面相合，拒绝无效输入',()=>{
+    for(const x of [-2.3,-1.9,-1.5,-.95,1.9,2.3])for(const t of [.18,.34,.48]){
+      const p=rawSection(x,t),q=bodyTopPoint(x,p[2]/halfWidth(x),0);
+      expect(Math.hypot(...delta(p,q))).toBeLessThan(1e-7);
+      const mirror=bodyTopPoint(x,-p[2]/halfWidth(x),0);
+      expect(mirror[2]).toBeCloseTo(-p[2],6);
+    }
+    expect(()=>bodyTopPoint(0,1.1)).toThrow('宽度比例');
+    expect(()=>bodyTopPoint(NaN,.5)).toThrow('有限');
+  });
   it('饰件投影能反求圆角带上的位置，对轮廓外点显式拒绝',()=>{
     for(const end of [-1,1] as const)for(const u of [.12,.24,.36,.59,.70,.77,.89])for(const r of [.3,.89,.94,.98]){
       const p=endCapPoint(end,u,r),q=endSurfacePoint(end,p[2],p[1]);

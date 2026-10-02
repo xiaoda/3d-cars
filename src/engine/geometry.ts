@@ -2,6 +2,24 @@ import * as T from 'three';
 import {TessellateModifier} from 'three/addons/modifiers/TessellateModifier.js';
 export type Point = [number,number,number];
 
+/** 同时翻转绕序和法线；DoubleSide 不能替代正确的 GLB 外法线。 */
+export function reverseFaces(g:T.BufferGeometry):T.BufferGeometry{
+  if(g.index){
+    for(let i=0;i<g.index.count;i+=3){const a=g.index.getX(i+1);g.index.setX(i+1,g.index.getX(i+2));g.index.setX(i+2,a);}
+    g.index.needsUpdate=true;
+  }else{
+    for(const attribute of Object.values(g.attributes)){
+      const a=attribute as T.BufferAttribute;
+      for(let i=0;i<a.count;i+=3)for(let j=0;j<a.itemSize;j++){
+        const left=(i+1)*a.itemSize+j,right=(i+2)*a.itemSize+j,value=a.array[left];a.array[left]=a.array[right];a.array[right]=value;
+      }
+      a.needsUpdate=true;
+    }
+  }
+  const n=g.getAttribute('normal');if(n){for(let i=0;i<n.count;i++)n.setXYZ(i,-n.getX(i),-n.getY(i),-n.getZ(i));n.needsUpdate=true;}
+  return g;
+}
+
 export function surface(fn:(u:number,v:number)=>Point, nu=40,nv=16,options:{analyticNormals?:boolean;flip?:boolean}={}):T.BufferGeometry {
   const p:number[]=[],uv:number[]=[],ind:number[]=[];
   for(let i=0;i<=nu;i++) for(let j=0;j<=nv;j++) {p.push(...fn(i/nu,j/nv));uv.push(i/nu,j/nv);}
