@@ -1,0 +1,141 @@
+{
+  "scope": "16 selected 2D roof trace samples used for fitting; not independent validation or real vehicle surface accuracy",
+  "before": {
+    "rmsMm": 96.63925554668036,
+    "maxAbsMm": 212.50000000000014
+  },
+  "after": {
+    "rmsMm": 1.399750976562475,
+    "maxAbsMm": 5.5990039062499
+  },
+  "rows": [
+    {
+      "x": -1.05,
+      "referenceY": 0.9672,
+      "beforeY": 1.002,
+      "afterY": 0.9672,
+      "beforeDeltaMm": 34.800000000000054,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": -0.86,
+      "referenceY": 1.0751,
+      "beforeY": 1.035,
+      "afterY": 1.0751,
+      "beforeDeltaMm": -40.10000000000002,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": -0.63,
+      "referenceY": 1.1993,
+      "beforeY": 1.197,
+      "afterY": 1.1993,
+      "beforeDeltaMm": -2.2999999999999687,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": -0.34,
+      "referenceY": 1.3357,
+      "beforeY": 1.374,
+      "afterY": 1.3357,
+      "beforeDeltaMm": 38.3,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": -0.14,
+      "referenceY": 1.3877,
+      "beforeY": 1.412,
+      "afterY": 1.3877,
+      "beforeDeltaMm": 24.29999999999999,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 0.1,
+      "referenceY": 1.4157,
+      "beforeY": 1.421142857142857,
+      "afterY": 1.4157,
+      "beforeDeltaMm": 5.442857142857083,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 0.28,
+      "referenceY": 1.424,
+      "beforeY": 1.428,
+      "afterY": 1.424,
+      "beforeDeltaMm": 4.0000000000000036,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 0.55,
+      "referenceY": 1.4248,
+      "beforeY": 1.4245384615384615,
+      "afterY": 1.4248,
+      "beforeDeltaMm": -0.2615384615385352,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 0.8,
+      "referenceY": 1.4133,
+      "beforeY": 1.406608695652174,
+      "afterY": 1.4133,
+      "beforeDeltaMm": -6.691304347826055,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1,
+      "referenceY": 1.3914,
+      "beforeY": 1.3266086956521739,
+      "afterY": 1.3914,
+      "beforeDeltaMm": -64.7913043478261,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.13,
+      "referenceY": 1.3661,
+      "beforeY": 1.239,
+      "afterY": 1.3661,
+      "beforeDeltaMm": -127.1,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.3,
+      "referenceY": 1.3138,
+      "beforeY": 1.1399142857142857,
+      "afterY": 1.3138,
+      "beforeDeltaMm": -173.8857142857144,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.48,
+      "referenceY": 1.2475,
+      "beforeY": 1.035,
+      "afterY": 1.2475,
+      "beforeDeltaMm": -212.50000000000014,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.65,
+      "referenceY": 1.1746,
+      "beforeY": 1,
+      "afterY": 1.1746,
+      "beforeDeltaMm": -174.60000000000008,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.8,
+      "referenceY": 1.1056,
+      "beforeY": 1,
+      "afterY": 1.1056,
+      "beforeDeltaMm": -105.59999999999991,
+      "afterDeltaMm": 0
+    },
+    {
+      "x": 1.845,
+      "referenceY": 1.0841,
+      "beforeY": 1,
+      "afterY": 1.08969900390625,
+      "beforeDeltaMm": -84.10000000000007,
+      "afterDeltaMm": 5.5990039062499
+    }
+  ]
+}

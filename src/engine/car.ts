@@ -1,6 +1,8 @@
 import * as T from 'three';
-import {A4, AXLES, archBottom, halfWidth, deckHeight, PAINTS, type StudySettings} from '../data/a4';
-import {surface, polygon, curvedPanel, tube, mesh, type Point} from './geometry';
+import {A4, AXLES, deckHeight, PAINTS, type StudySettings} from '../data/a4';
+import {surface, polygon, curvedPanel, tube, mesh, mapPolyline, type Point} from './geometry';
+import {CABIN_RANGE,SIDE_WINDOW_OUTLINE,roofHeight,roofCrown,roofPoint,cabinSidePoint,clipWindow,windowSpan,warpBodyX} from '../data/bodyShape';
+import {BODY_STATIONS,makeBodySection,bodySection,bodySidePoint,endCapPoint,endSurfacePoint} from '../data/bodyShell';
 
 /** 所有网格在这里生成。曲面是估算，不是 Audi 原厂 CAD。 */
 export function buildCar() {
@@ -25,87 +27,69 @@ export function buildCar() {
   const path=(pts:Point[],r:number,m:T.Material,name:string,closed=false,smooth=true,parent:T.Group=group)=>{const o=add(tube(pts,r,closed,smooth),m,name,parent);o.castShadow=false;o.receiveShadow=false;return o;};
   const box=(size:Point,pos:Point,m:T.Material,name:string,parent:T.Group=group)=>{const o=add(new T.BoxGeometry(...size),m,name,parent);o.position.set(...pos);return o;};
 
-  // 跨截面从左轮拱下沿，经车身顶面，到右轮拱下沿。下沿按车轮位置抬升，保留实际轮拱缺口。
-  // 长度基准包含前后饰件；基础蒙皮略内收，为格栅、号牌及饰条留出真实几何空间。
-  const warpedX=(x:number,z:number)=>x+Math.max(0,(-x-1.90)/.481)*(.024+.205*(z/.93)**2)-Math.max(0,(x-1.85)/.531)*(.012+.112*(z/.93)**2);
-  const sectionAt=(x:number,v:number):Point=>{
-    const w=halfWidth(x),d=deckHeight(x),bottom=archBottom(x);
-    const keys=[[-.946,bottom],[-.967,bottom+(d-.175-bottom)*.43],[-1,d-.175],[-.982,d-.091],[-.88,d-.035],[-.56,d-.007],[0,d],[.56,d-.007],[.88,d-.035],[.982,d-.091],[1,d-.175],[.967,bottom+(d-.175-bottom)*.43],[.946,bottom]];
-    const f=v*(keys.length-1),i=Math.min(keys.length-2,Math.floor(f)),t=f-i;
-    const z=w*T.MathUtils.lerp(keys[i][0],keys[i+1][0],t);
-    const baseY=T.MathUtils.lerp(keys[i][1],keys[i+1][1],t);
-    const noseLift=Math.max(0,(-x-1.90)/.481)*.17*(z/w)**2*T.MathUtils.clamp((baseY-bottom)/(d-bottom),0,1);
-    return [warpedX(x,z),baseY+noseLift,z];
+  // 连续横截面 + 外围圆角带；只裁去轮拱下方，不压缩轮拱上方的肩线。
+  const warpedX=warpBodyX;
+  const sectionAt=bodySection,sections=new Map<number,ReturnType<typeof makeBodySection>>();
+  const shell=(u:number,v:number):Point=>{
+    const f=u*(BODY_STATIONS.length-1),i=Math.min(Math.floor(f),BODY_STATIONS.length-2),x=T.MathUtils.lerp(BODY_STATIONS[i],BODY_STATIONS[i+1],f-i);
+    let s=sections.get(x);if(!s){s=makeBodySection(x);sections.set(x,s);}return s(v);
   };
-  add(surface((u,v)=>sectionAt((u-.5)*A4.length,v),220,72),paint,'车身连续曲面');
-  for(const end of [-1,1]) {
-    const x=end*A4.length/2;
-    add(surface((u,v)=>{
-      let edge:Point;
-      if(u<.84)edge=sectionAt(x,u/.84);
-      else {const a=sectionAt(x,1),b=sectionAt(x,0),t=(u-.84)/.16;edge=[x,T.MathUtils.lerp(a[1],b[1],t),T.MathUtils.lerp(a[2],b[2],t)];}
-      const z=edge[2]*v;return [warpedX(x,z),.51+(edge[1]-.51)*v,z];
-    },96,20),paint,end===-1?'前端封口':'后端封口');
-  }
+  add(surface(shell,BODY_STATIONS.length-1,100,{analyticNormals:true,flip:true}),paint,'车身连续曲面');sections.clear();
+  for(const end of [-1,1] as const)add(surface((u,v)=>{
+    // 前 100 段与车身的 100 个横截面分段逐点相同，余下 20 段闭合底边。
+    const perimeter=u<=5/6?u/(5/6)*.84:.84+(u-5/6)*.96;
+    return endCapPoint(end,perimeter,v);
+  },120,32,{analyticNormals:true,flip:end===1}),paint,end===-1?'前端封口':'后端封口');
   box([3.8,.08,1.24],[0,.19,0],black,'底部简化遮挡');
 
-  const roofProfile=[[-.96,1.002],[-.86,1.035],[-.63,1.197],[-.34,1.374],[-.14,1.412],[.28,1.428],[.67,1.423],[.90,1.394],[1.13,1.239],[1.48,1.035],[1.63,1.000]];
-  const roofH=(x:number)=>{
-    for(let i=1;i<roofProfile.length;i++) if(x<=roofProfile[i][0]) {
-      const a=roofProfile[i-1],b=roofProfile[i];return T.MathUtils.lerp(a[1],b[1],Math.max(0,(x-a[0])/(b[0]-a[0])));
-    }
-    return 1;
-  };
-  const cabinZ=(y:number)=>.793-(y-1)*.53;
-  add(surface((u,v)=>{const x=-.96+2.59*u,q=2*v-1,h=roofH(x);return [x,h-.026*q*q,cabinZ(h)*q];},100,32),paint,'车顶与前后柱曲面');
+  const cabinX=(u:number)=>T.MathUtils.lerp(...CABIN_RANGE,u);
+  add(surface((u,v)=>roofPoint(cabinX(u),2*v-1),140,40),paint,'车顶与前后柱曲面');
   for(const side of [-1,1]) {
-    const pts:Point[]=roofProfile.map(([x,y])=>[x,y-.018,side*cabinZ(y)]);
-    pts.push([1.63,.999,side*.793],[-.96,.999,side*.793]);
-    add(polygon(pts),paint,`座舱侧框${side}`);
-    const windows=[
-      [[-.796,1.037],[-.290,1.355],[-.095,1.381],[.335,1.389],[.346,1.037]],
-      [[.410,1.037],[.402,1.389],[.743,1.380],[.884,1.355],[1.354,1.046]],
-    ];
+    add(surface((u,v)=>{
+      const x=cabinX(u),top=roofHeight(x)-roofCrown(x),base=deckHeight(x)-.035;
+      return cabinSidePoint(x,T.MathUtils.lerp(base,top,v),side);
+    },140,10),paint,`座舱侧框${side}`);
+    const windows=[clipWindow(SIDE_WINDOW_OUTLINE,.30,true),clipWindow(SIDE_WINDOW_OUTLINE,.375,false)];
     windows.forEach((poly,i)=>{
-      const p:Point[]=poly.map(([x,y])=>[x,y,side*(cabinZ(y)+.008)]);
-      add(polygon(p),glass,`侧窗-${side}-${i}`);
-      path(p,.003,black,`侧窗密封-${side}-${i}`,true,false);
+      const p:Point[]=poly.map(([x,y])=>cabinSidePoint(x,y,side,.004));
+      add(curvedPanel(poly,(x,y)=>cabinSidePoint(x,y,side,.003)),glass,`侧窗-${side}-${i}`);
+      path(p,.0025,black,`侧窗密封-${side}-${i}`,true,false);
     });
-    const outline:Point[]=[[-.828,1.023],[-.311,1.368],[-.105,1.399],[.742,1.399],[.902,1.374],[1.404,1.027],[.4,1.019]].map(([x,y])=>[x,y,side*(cabinZ(y)+.011)]);
-    path(outline,.0035,chrome,`窗框亮条${side}`,true,false);
+    const outline:Point[]=SIDE_WINDOW_OUTLINE.map(([x,y])=>cabinSidePoint(x,y,side,.008));
+    path(outline,.003,chrome,`窗框亮条${side}`,true,false);
     // B 柱为独立深色部件，不以整块贴图替代窗面。
-    const bp:Point[]=[[.346,1.032],[.333,1.393],[.399,1.393],[.411,1.032]].map(([x,y])=>[x,y,side*(cabinZ(y)+.012)]);
-    add(polygon(bp),black,`B柱${side}`);
+    const [l0,l1]=windowSpan(.30),[r0,r1]=windowSpan(.375);
+    add(curvedPanel([[.30,l0],[.30,l1],[.375,r1],[.375,r0]],(x,y)=>cabinSidePoint(x,y,side,.005)),black,`B柱${side}`);
   }
-  for(const [name,x0,x1] of [['前挡风玻璃',-.852,-.194],['后挡风玻璃',.963,1.466]] as const) {
-    add(surface((u,v)=>{const x=T.MathUtils.lerp(x0,x1,u),h=roofH(x),q=(v*2-1)*.943;return [x,h-.026*q*q+.005,cabinZ(h)*q];},28,36),glass,name);
+  for(const [name,x0,x1] of [['前挡风玻璃',-.99,-.235],['后挡风玻璃',1.12,1.805]] as const) {
+    add(surface((u,v)=>roofPoint(T.MathUtils.lerp(x0,x1,u),(v*2-1)*.925,.003),48,36),glass,name);
   }
   // 细节全部为网格/曲线生成。天线简化，未实现可见内部结构。
-  const antenna=add(new T.SphereGeometry(1,16,10),paint,'简化车顶天线');antenna.position.set(.915,1.397,0);antenna.scale.set(.074,.027,.021);
+  const antenna=add(new T.SphereGeometry(1,16,10),paint,'简化车顶天线');antenna.position.set(1.105,roofHeight(1.105)+.005,0);antenna.scale.set(.074,.027,.021);
 
+  const sidePoint=bodySidePoint;
   for(const side of [-1,1]) {
     // 门缝、下裙与肩线。深度跟随估算的侧面宽度。
-    const sideZ=(x:number,y:number)=>side*(halfWidth(x)*(y>.83?.98:y<.35?.963:1.002));
-    const doorLines=[
+    const doorLines:[number,number][][]=[
       [[-.90,.97],[-.84,.76],[-.91,.38],[-.87,.23]],
       [[.37,.995],[.39,.81],[.36,.42],[.35,.23]],
       [[1.44,1.00],[1.54,.88],[1.68,.70]],
-      [[-.90,.23],[.35,.23],[.97,.25]],
+      [[-.90,.23],[.35,.23],[.93,.25]],
     ];
-    doorLines.forEach((line,i)=>path(line.map(([x,y])=>[x,y,sideZ(x,y)]),.0026,seam,`门缝${side}-${i}`));
-    path([[-.98,.216,side*.898],[.30,.205,side*.881],[.948,.223,side*.91]],.018,paint,`侧裙${side}`);
+    doorLines.forEach((line,i)=>path(mapPolyline(line,(x,y)=>sidePoint(x,y,side)),.0022,seam,`门缝${side}-${i}`,false,false));
+    path(mapPolyline([[-.98,.216],[.30,.205],[.948,.223]],(x,y)=>sidePoint(x,y,side,.006)),.010,paint,`侧裙${side}`,false,false);
     for(const x of [.15,1.015]) {
-      const handle=add(new T.CapsuleGeometry(.013,.114,4,10),chrome,`门把手${side}-${x}`);handle.rotation.z=Math.PI/2;handle.position.set(x,.916,side*(halfWidth(x)*.994+.005));
+      const handle=add(new T.CapsuleGeometry(.013,.114,4,10),chrome,`门把手${side}-${x}`);handle.rotation.z=Math.PI/2;handle.position.set(...sidePoint(x,.916,side,.009));
     }
-    path([[-.77,1.034,side*.790],[-.79,1.04,side*.899],[-.735,1.044,side*.963]],.013,black,`后视镜支架${side}`);
-    const mirror=add(new T.SphereGeometry(1,28,14),paint,`后视镜${side}`);mirror.position.set(-.72,1.066,side*.916);mirror.scale.set(.112,.049,.095);
-    const mirrorGlass=add(new T.SphereGeometry(1,24,12),chrome,`镜片${side}`);mirrorGlass.position.set(-.623,1.063,side*.916);mirrorGlass.scale.set(.006,.034,.078);
-    path([[-.80,1.063,side*.983],[-.72,1.061,side*1.008],[-.655,1.063,side*.994]],.0035,light,`后视镜转向灯${side}`);
+    path([[-.78,1.019,side*.790],[-.70,1.002,side*.900],[-.63,1.013,side*.963]],.013,black,`后视镜支架${side}`);
+    const mirror=add(new T.SphereGeometry(1,28,14),paint,`后视镜${side}`);mirror.position.set(-.63,1.027,side*.916);mirror.scale.set(.115,.043,.095);
+    const mirrorGlass=add(new T.SphereGeometry(1,24,12),chrome,`镜片${side}`);mirrorGlass.position.set(-.531,1.024,side*.916);mirrorGlass.scale.set(.006,.030,.078);
+    path([[-.71,1.024,side*.983],[-.63,1.021,side*1.008],[-.565,1.024,side*.994]],.0035,light,`后视镜转向灯${side}`);
     // 轮拱收边，贴合实际开口而非画一个黑色圆遮挡实体车身。
     for(const axle of [AXLES.front,AXLES.rear]) {
       const pts:Point[]=[];
-      for(let i=0;i<=48;i++) {const a=i/48*Math.PI,x=axle+Math.cos(a)*A4.archRadius;pts.push([x,A4.wheelRadius+Math.sin(a)*A4.archRadius,side*halfWidth(x)*.948]);}
-      path(pts,.007,paint,`轮拱边缘${side}-${axle}`);
+      for(let i=0;i<=64;i++) {const a=i/64*Math.PI,x=axle+Math.cos(a)*A4.archRadius;pts.push(sidePoint(x,A4.wheelRadius+Math.sin(a)*A4.archRadius,side,.002));}
+      path(pts,.004,paint,`轮拱边缘${side}-${axle}`,false,false);
     }
   }
   // 机盖压线与后备厢边界。
@@ -113,14 +97,13 @@ export function buildCar() {
     const hood:Point[]=[],trunk:Point[]=[];
     for(let i=0;i<=24;i++) {
       const p=sectionAt(-2.25+1.36*i/24,side===1?.69:.31);p[1]+=.0015;hood.push(p);
-      const q=sectionAt(1.59+.69*i/24,side===1?.72:.28);q[1]+=.0015;trunk.push(q);
+      const q=sectionAt(1.87+.43*i/24,side===1?.72:.28);q[1]+=.0015;trunk.push(q);
     }
     path(hood,.0016,seam,`机盖压线${side}`,false,false);
     path(trunk,.0015,seam,`后备厢侧缝${side}`,false,false);
   }
 
-  const frontX=(z:number)=>warpedX(-A4.length/2,z)-.004;
-  const fp=(z:number,y:number,offset=0):Point=>[frontX(z)-offset,y,z];
+  const fp=(z:number,y:number,offset=0):Point=>[endSurfacePoint(-1,z,y)[0]-.004-offset,y,z];
   const grille2D:[number,number][]=[[-.345,.680],[.345,.680],[.490,.574],[.365,.321],[-.365,.321],[-.490,.574]];
   const grille:Point[]=grille2D.map(([z,y])=>fp(z,y,.004));
   add(curvedPanel(grille2D,(z,y)=>fp(z,y,.006)),black,'Singleframe 格栅');
@@ -135,14 +118,14 @@ export function buildCar() {
   // 四环只是程序化几何标识，本站不是品牌官方作品。
   for(let i=0;i<4;i++) {
     const ring=add(new T.TorusGeometry(.034,.0038,8,40),chrome,`前四环${i}`);ring.rotation.y=Math.PI/2;ring.position.set(-2.375,.605,(i-1.5)*.057);
-    const rr=add(new T.TorusGeometry(.025,.0030,8,32),chrome,`后四环${i}`);rr.rotation.y=Math.PI/2;rr.position.set(2.374,.897,(i-1.5)*.042);
+    const rz=(i-1.5)*.042;const rr=add(new T.TorusGeometry(.025,.0030,8,32),chrome,`后四环${i}`);rr.rotation.y=Math.PI/2;rr.position.set(warpedX(A4.length/2,rz,.897)+.010,.897,rz);
   }
   for(const side of [-1,1]) {
     const lamp2D:[number,number][]=[[.407,.681],[.800,.759],[.817,.620],[.623,.593],[.463,.617]];
-    const lamp:Point[]=lamp2D.map(([z,y])=>fp(side*z,y,.016));
+    const lamp=mapPolyline(lamp2D,(z,y)=>fp(side*z,y,.019),true);
     add(curvedPanel(lamp2D,(z,y)=>fp(side*z,y,.016)),glass,`前灯罩${side}`);path(lamp,.0035,chrome,`前灯罩边框${side}`,true,false);
-    path([[.429,.679],[.61,.712],[.786,.744],[.793,.692]].map(([z,y])=>fp(side*z,y,.027)),.0045,light,`日行灯上沿${side}`,false,false);
-    path([[.482,.630],[.641,.609],[.799,.636]].map(([z,y])=>fp(side*z,y,.027)),.003,light,`日行灯下沿${side}`,false,false);
+    path(mapPolyline([[.429,.679],[.61,.712],[.786,.744],[.793,.692]],(z,y)=>fp(side*z,y,.027)),.0045,light,`日行灯上沿${side}`,false,false);
+    path(mapPolyline([[.482,.630],[.641,.609],[.799,.636]],(z,y)=>fp(side*z,y,.027)),.003,light,`日行灯下沿${side}`,false,false);
     for(let j=0;j<5;j++) {const z=.49+j*.057;path([fp(side*z,.691+(z-.49)*.18,.029),fp(side*(z+.014),.670+(z-.49)*.18,.029)],.005,light,`灯内分段${side}-${j}`,false,false);}
     for(const z of [.626,.738]) {
       const lens:[number,number][]=[[z-.037,.686],[z+.034,.686],[z+.038,.639],[z-.028,.637]];
@@ -150,25 +133,25 @@ export function buildCar() {
       path(lens.map(([z,y])=>fp(side*z,y,.032)),.0025,chrome,`透镜边缘${side}-${z}`,true,false);
     }
     const intake2D:[number,number][]=[[.570,.477],[.850,.478],[.850,.282],[.505,.300]];
-    const intake:Point[]=intake2D.map(([z,y])=>fp(side*z,y,.014));
+    const intake=mapPolyline(intake2D,(z,y)=>fp(side*z,y,.020),true);
     add(curvedPanel(intake2D,(z,y)=>fp(side*z,y,.014)),black,`前侧进气口${side}`);path(intake,.005,paint,`进气口包围${side}`,true,false);
-    for(let j=0;j<3;j++){const y=.32+j*.058;path([fp(side*.575,y,.027),fp(side*.830,y+.01,.027)],.005,darkMetal,`进气口横条${side}-${j}`);}
-    path([fp(side*.52,.263,.009),fp(side*.85,.250,.009)],.007,chrome,`前唇亮条${side}`);
+    for(let j=0;j<3;j++){const y=.32+j*.058;path(mapPolyline([[.575,y],[.830,y+.01]],(z,y)=>fp(side*z,y,.027)),.005,darkMetal,`进气口横条${side}-${j}`,false,false);}
+    path(mapPolyline([[.52,.263],[.85,.250]],(z,y)=>fp(side*z,y,.012)),.007,chrome,`前唇亮条${side}`,false,false);
     // 后灯采用分层网格，灯带与灯罩独立。
-    const rp=(z:number,y:number,off=0):Point=>[warpedX(A4.length/2,z)+.004+off,y,side*z];
+    const rp=(z:number,y:number,off=0):Point=>[endSurfacePoint(1,z,y)[0]+.004+off,y,side*z];
     const rear2D:[number,number][]=[[.397,.86],[.835,.899],[.863,.797],[.594,.764],[.434,.786]];
-    add(curvedPanel(rear2D,(z,y)=>rp(z,y,.007)),new T.MeshPhysicalMaterial({color:'#51121a',roughness:.21,metalness:.3,clearcoat:1,side:T.DoubleSide}),`后灯罩${side}`);
-    path([[.446,.824],[.590,.804],[.850,.830],[.861,.874]].map(([z,y])=>rp(z,y,.012)),.009,tail,`后灯带${side}`,false,false);
+    add(curvedPanel(rear2D,(z,y)=>rp(z,y,.007),{maxEdge:.03,analyticNormals:true}),new T.MeshPhysicalMaterial({color:'#51121a',roughness:.21,metalness:.3,clearcoat:1,side:T.DoubleSide}),`后灯罩${side}`);
+    path(mapPolyline([[.446,.824],[.590,.804],[.850,.830],[.861,.874]],(z,y)=>rp(z,y,.017)),.009,tail,`后灯带${side}`,false,false);
     for(let j=0;j<6;j++){const z=.55+j*.045;path([rp(z,.825,.012),rp(z+.008,.860,.012)],.005,tail,`后灯分段${side}-${j}`);}
     const exhaust:[number,number][]=[[.518,.337],[.780,.337],[.759,.278],[.548,.278]];
     add(curvedPanel(exhaust,(z,y)=>rp(z,y,.013)),black,`排气口简化${side}`);
-    path(exhaust.map(([z,y])=>rp(z,y,.019)),.0065,chrome,`排气饰框${side}`,true,false);
+    path(mapPolyline(exhaust,(z,y)=>rp(z,y,.014),true),.0065,chrome,`排气饰框${side}`,true,false);
   }
-  const rearPoint=(z:number,y:number,offset=.009):Point=>[warpedX(A4.length/2,z)+offset,y,z];
-  add(curvedPanel([[-.82,.415],[.82,.415],[.80,.222],[-.80,.222]],(z,y)=>rearPoint(z,y,.007)),darkMetal,'后下包围');
+  const rearPoint=(z:number,y:number,offset=.009):Point=>[endSurfacePoint(1,z,y)[0]+offset,y,z];
+  add(curvedPanel([[-.82,.415],[.82,.415],[.80,.265],[-.80,.265]],(z,y)=>rearPoint(z,y,.009),{maxEdge:.025,analyticNormals:true}),darkMetal,'后下包围');
   const bumperLine=Array.from({length:41},(_,i)=>rearPoint(-.85+i*.0425,.478,.010));
   path(bumperLine,.002,seam,'后保险杠接缝',false,false);
-  for(const side of [-1,1])path([[side*.59,.864],[side*.565,.744],[side*.52,.634],[side*.30,.625],[0,.625]].map(([z,y])=>rearPoint(z,y,.010)),.002,seam,`后备厢开口${side}`,false,false);
+  for(const side of [-1,1])path(mapPolyline([[side*.59,.864],[side*.565,.744],[side*.52,.634],[side*.30,.625],[0,.625]],(z,y)=>rearPoint(z,y,.010)),.002,seam,`后备厢开口${side}`,false,false);
   box([.017,.091,.420],[-2.3725,.468,0],new T.MeshStandardMaterial({color:'#dedfd7',roughness:.65}),'前号牌底板');
   box([.018,.106,.420],[2.372,.552,0],new T.MeshStandardMaterial({color:'#dedfd7',roughness:.65}),'后号牌底板');
 

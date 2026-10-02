@@ -1,0 +1,48 @@
+{
+  "bytes": 5518332,
+  "magic": 1179937895,
+  "glbVersion": 2,
+  "meshes": 301,
+  "triangles": 203516,
+  "badNormals": 0,
+  "userData": {
+    "name": "Audi A4 · 程序化外观研究",
+    "source": "依据 Audi 官方 04/19 尺寸图的程序化近似；非原厂模型",
+    "modelVersion": "0.4",
+    "units": "metres",
+    "coordinateSystem": "X longitudinal (front negative), Y up, Z lateral"
+  },
+  "frontWheel": 0.2617993877991494,
+  "rearWheel": 0,
+  "paint": {
+    "color": "294f69",
+    "metalness": 0.68,
+    "roughness": 0.29
+  },
+  "studio": {
+    "view": "hero",
+    "settings": {
+      "mode": "clay",
+      "paint": "blue",
+      "lights": false,
+      "steering": 15,
+      "rotate": false,
+      "dimensions": false
+    },
+    "gpu": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A60) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "software": false,
+    "triangles": 203516,
+    "renderTriangles": 343314,
+    "drawCalls": 470,
+    "camera": [
+      6.5,
+      2.3499999999999996,
+      -6
+    ],
+    "target": [
+      0,
+      0.7,
+      0
+    ]
+  }
+}

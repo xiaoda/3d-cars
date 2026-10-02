@@ -1,0 +1,178 @@
+{
+  "baseline": "v0.3 uncommitted working tree preserved in tmp/v04-baseline/src; not HEAD ff51ba2",
+  "frozen": [
+    {
+      "file": "src/data/calibration.ts",
+      "sha256": "f8ed99ead2487aa9e8a31e817becccdabbf1098f1ff063f296c54a5f9ac25ff7"
+    },
+    {
+      "file": "src/data/bodyShape.ts",
+      "sha256": "f7b3ee939c2d9e177419a9ea00718246ba18a42c82557000443cad55a540538b"
+    },
+    {
+      "file": "src/data/bodyEvidence.json",
+      "sha256": "e00fe2b7359a2f9976b440fee654f6eb2a2bb7a7f1828112355c0fdb53a84ed0"
+    },
+    {
+      "file": "public/references/audi-a4-dimensions.pdf",
+      "sha256": "4f733bff3c350f1a86aeb9f3e38a617d24cce9bc2275d0b4c9f73b70d451a429"
+    },
+    {
+      "file": "public/references/audi-a4-dimensions.png",
+      "sha256": "e82402dbfcd99b1932bc64feec9b471ea5f5a52704c2c4c5056be34c1ced073d"
+    }
+  ],
+  "officialAndEstimatedA4DataUnchangedExceptVersion": true,
+  "conditions": {
+    "frontCamera": [
+      -6.5,
+      2.6,
+      6
+    ],
+    "rearCamera": [
+      6.5,
+      2.35,
+      -6
+    ],
+    "target": [
+      0,
+      0.7,
+      0
+    ],
+    "lights": false,
+    "steering": 0,
+    "paint": "graphite for paint; silver for clay",
+    "lighting": "unchanged RoomEnvironment and original lights/exposure",
+    "calibration": {
+      "opacity": 0.8,
+      "points": true,
+      "steering": 0
+    }
+  },
+  "reusedBaselineImages": [
+    {
+      "file": "../v03/after-side.png",
+      "sha256": "65015fe6fc7a7f1b8c66224c455aa30c0b7f9241204eb64ab9009d6f219c7ab3"
+    },
+    {
+      "file": "../v03/after-front.png",
+      "sha256": "6ad24eceed642d8ebc3a9105fc43368cb7a9f79d9b207ec95980963d598f57f0"
+    },
+    {
+      "file": "../v03/after-rear.png",
+      "sha256": "32e62860f58da179202973ed47fb3ed26cb056feec16eea3c05c99e7589e6282"
+    },
+    {
+      "file": "../v03/after-top.png",
+      "sha256": "7ae38e381273f087e6bbf5926701e2b3fc855031bd40d57669fffd38c30142ba"
+    },
+    {
+      "file": "../v03/after-side-model.png",
+      "sha256": "ff530a75892246913375a75d7659e638d339876c169110b7e0439a544caebe46"
+    },
+    {
+      "file": "../v03/after-top-model.png",
+      "sha256": "c0e7fd0ab59b7c95d4e5dc9c50805adacc7f918d14378141da6d2924045e9749"
+    }
+  ],
+  "images": [
+    {
+      "file": "after-front-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 253232,
+      "sha256": "bf9fad3ced7f3309d1d35e04f3951c48328af32a22880d1f2b96e05cbd67f546"
+    },
+    {
+      "file": "after-front-paint.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 372414,
+      "sha256": "e5b055cb40566e951202b582fa8145c6ae57911aff80ce4768cf9227da361ac7"
+    },
+    {
+      "file": "after-front.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 730343,
+      "sha256": "33f6a8dc466a4032837deeca10b69d1e3be36929c0da00a74e92adf5aef78770"
+    },
+    {
+      "file": "after-rear-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 243566,
+      "sha256": "dcf376890b4d06bf4e548d53449666248c3c1b2741f335b553f998728296446a"
+    },
+    {
+      "file": "after-rear-paint.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 343157,
+      "sha256": "305405f63e0ddd7eafaadd2c17d018a2b182d7c916a9dfc4d4d8b5416e1904f6"
+    },
+    {
+      "file": "after-rear.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 627917,
+      "sha256": "3f125ea67d112bdce53332b3da5c6a3e271d9a1ac1988a41d41bf38808bc0e96"
+    },
+    {
+      "file": "after-side-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 409396,
+      "sha256": "68b639b4dbad8c239ed4ab9abae1f6d35be4499e02b110691dfd71535aacd36b"
+    },
+    {
+      "file": "after-side.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 942317,
+      "sha256": "e679f26b4b20f2c3e1700d86a73fa264c6b779ccebfb8a587818c294fbfe32fd"
+    },
+    {
+      "file": "after-top-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 325144,
+      "sha256": "1c96e22404ce5daae9b3e9a28009d33ec139e781d9f0b929650d1e406c4152b4"
+    },
+    {
+      "file": "after-top.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 1093655,
+      "sha256": "c01aaed57d91c64b96e1c4b684490e212e8f314a897530149cd9a73c2c5dc8a0"
+    },
+    {
+      "file": "before-front-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 297256,
+      "sha256": "c26f299aa75405d8e8f6ecbba8e817c222b0fd5987a4dabe27c739508d612d4c"
+    },
+    {
+      "file": "before-front-paint.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 401272,
+      "sha256": "3e657ae4c84757c2ebf3d72338a803404d4a988590f71e281f7118de7f227e82"
+    },
+    {
+      "file": "before-rear-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 230282,
+      "sha256": "918bcda4756de8bfbab05897a719948363bb508895ac929c2cc3b45842fdce72"
+    },
+    {
+      "file": "before-rear-paint.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 331779,
+      "sha256": "e78423f6c9817315eb1283744dc95197cc04d3ae517d43a7eabceb7bb247024a"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "baselineCommit": "ff51ba2151640cfda5e5596d07af57413c424587",
+  "referencePdfSha256": "4f733bff3c350f1a86aeb9f3e38a617d24cce9bc2275d0b4c9f73b70d451a429",
+  "calibrationSourceSha256": "f8ed99ead2487aa9e8a31e817becccdabbf1098f1ff063f296c54a5f9ac25ff7",
+  "conditions": {
+    "calibration": {
+      "opacity": 0.8,
+      "points": true,
+      "steering": 0,
+      "mode": "overlay; filenames ending model use model-only"
+    },
+    "heroClay": {
+      "camera": [
+        -6.5,
+        2.6,
+        6
+      ],
+      "target": [
+        0,
+        0.69,
+        0
+      ],
+      "mode": "clay",
+      "lights": false,
+      "steering": 0,
+      "studioLighting": "unchanged from baseline"
+    },
+    "rearClay": {
+      "camera": [
+        5.641560242918633,
+        2.901221537465556,
+        -6.721710893646663
+      ],
+      "note": "additional rear-quarter inspection, no before pair"
+    }
+  },
+  "images": [
+    {
+      "file": "after-front.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 724933,
+      "sha256": "6ad24eceed642d8ebc3a9105fc43368cb7a9f79d9b207ec95980963d598f57f0"
+    },
+    {
+      "file": "after-hero-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 297256,
+      "sha256": "c26f299aa75405d8e8f6ecbba8e817c222b0fd5987a4dabe27c739508d612d4c"
+    },
+    {
+      "file": "after-rear-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 240714,
+      "sha256": "60d039467be35e53a5a1b7320b3658fe925b6c19ebd0da295a6df1004db62faf"
+    },
+    {
+      "file": "after-rear.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 610533,
+      "sha256": "32e62860f58da179202973ed47fb3ed26cb056feec16eea3c05c99e7589e6282"
+    },
+    {
+      "file": "after-side-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 376033,
+      "sha256": "ff530a75892246913375a75d7659e638d339876c169110b7e0439a544caebe46"
+    },
+    {
+      "file": "after-side.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 915434,
+      "sha256": "65015fe6fc7a7f1b8c66224c455aa30c0b7f9241204eb64ab9009d6f219c7ab3"
+    },
+    {
+      "file": "after-top-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 308301,
+      "sha256": "c0e7fd0ab59b7c95d4e5dc9c50805adacc7f918d14378141da6d2924045e9749"
+    },
+    {
+      "file": "after-top.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 1077431,
+      "sha256": "7ae38e381273f087e6bbf5926701e2b3fc855031bd40d57669fffd38c30142ba"
+    },
+    {
+      "file": "before-front.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 718447,
+      "sha256": "eefa25c0ee98f3d553a4c702c4aa36b4e3a6d36d3f27c97f71c7582e45329950"
+    },
+    {
+      "file": "before-hero-clay.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 311059,
+      "sha256": "ae1d9cad77642817510a9a49a2d5fa9bfae8020b24406fce3f507684475141f1"
+    },
+    {
+      "file": "before-rear.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 604184,
+      "sha256": "7920234bd4dd6039af31b6586374712b3b298470dd346860b027b4f5dc469f87"
+    },
+    {
+      "file": "before-side-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 368001,
+      "sha256": "2b0888471391e94d77235a35690dbc7b793e8d843afede3c00b4224c4335b333"
+    },
+    {
+      "file": "before-side.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 914326,
+      "sha256": "77f9b8b0d09633e82a876ead661c3b5ee7a724f8f1f27442f097c35f04331f8c"
+    },
+    {
+      "file": "before-top-model.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 286872,
+      "sha256": "f916b4980e1d9b7831889454dc2db771854379d8789dcb23f4327a0b8eda5eea"
+    },
+    {
+      "file": "before-top.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 1051907,
+      "sha256": "853767dc8665bc9725e6b20594a7b7cb29be3c0d2487a90dffbaed240b902efc"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import * as T from 'three';
 import {buildCar} from './car';
-import {DEFAULT_SETTINGS} from '../data/a4';
+import {DEFAULT_SETTINGS,MODEL_VERSION} from '../data/a4';
 import {DEFAULT_CALIBRATION,fitFrame,getCalibrationView,pixelToPlane,planeToWorld,sanitizeCalibration,type CalibrationSettings,type Pair} from '../data/calibration';
 
 /** 一个固定米制投影同时驱动图纸与模型；不提供拖动、旋转或单轴缩放。 */
@@ -74,7 +74,7 @@ export function createCalibration(host:HTMLElement,onReady:()=>void,onError:(s:s
       c.fillStyle='#fbfcfa';c.fillRect(0,0,width,62);c.fillRect(0,height-44,width,44);
       c.fillStyle='#325662';c.font='500 22px sans-serif';c.fillText(`A4 外形校准 / ${definition.name} / ${definition.basis}`,28,35);
       const modeName={overlay:'叠加',model:'仅模型',drawing:'仅图纸'}[settings.mode];
-      c.font='14px sans-serif';c.fillText(`${modeName} / 图纸 ${settings.mode==='drawing'?100:Math.round(settings.opacity*100)}% · 青色：v0.1 估算模型 · 黑线：Audi 04/19 图纸 · 橙点：人工读图 · 固定等比 / 非 CAD 精度`,28,height-20);
+      c.font='14px sans-serif';c.fillText(`${modeName} / 图纸 ${settings.mode==='drawing'?100:Math.round(settings.opacity*100)}% · 青色：v${MODEL_VERSION} 估算模型 · 黑线：Audi 04/19 图纸 · 橙点：人工读图 · 固定等比 / 非 CAD 精度`,28,height-20);
       c.textAlign='right';c.font='12px sans-serif';c.fillText('图纸 © AUDI AG · 仅本地研究 · 非官方模型',width-28,35);c.textAlign='left';
     }
   }

@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {createStudio,type Studio,type StudioStats} from './engine/studio';
-import {A4,DEFAULT_SETTINGS,PAINTS,SOURCE_URL,sanitizeSettings,type StudySettings,type CameraView} from './data/a4';
+import {A4,DEFAULT_SETTINGS,PAINTS,SOURCE_URL,MODEL_VERSION,MODEL_FILE_TAG,sanitizeSettings,type StudySettings,type CameraView} from './data/a4';
 import CalibrationWorkspace from './components/CalibrationWorkspace';
 
 declare global {interface Window {__A4_STUDY__?:Studio;}}
@@ -39,7 +39,7 @@ export default function App(){
   const chooseView=(id:CameraView)=>{setView(id);change({rotate:false});studio.current?.setView(id);};
   async function download(type:'png'|'glb'){
     if(!studio.current||busy)return;setBusy(type);
-    try{const blob=type==='png'?await studio.current.exportFrame():await studio.current.exportModel();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`audi-a4-study-v01.${type}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);setNotice(type==='png'?'已导出 1920 × 1080 PNG 画面':'已导出标准材质 GLB 模型（保留当前颜色和转向）');}
+    try{const blob=type==='png'?await studio.current.exportFrame():await studio.current.exportModel();const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`audi-a4-study-${MODEL_FILE_TAG}.${type}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);setNotice(type==='png'?'已导出 1920 × 1080 PNG 画面':'已导出标准材质 GLB 模型（保留当前颜色和转向）');}
     catch(e){setNotice(`导出失败：${e instanceof Error?e.message:String(e)}`);}finally{setBusy('');}
   }
   const selectedPaint=PAINTS.find(p=>p.id===settings.paint)??PAINTS[0];
@@ -53,7 +53,7 @@ export default function App(){
       <aside className="sidebar">
         <div className="specimen-id"><span>汽车形态研究</span><span>NO. 001</span></div>
         <div className="specimen-heading"><h1>Audi <em>A4</em><span>从二维资料，到三维形态。</span></h1><p>B9 中期改款 · 欧洲标准轴距三厢</p></div>
-        <div className="prototype-badge"><span/>程序化原型 <b>V 0.1</b></div>
+        <div className="prototype-badge"><span/>形体精修原型 <b>V {MODEL_VERSION}</b></div>
         <section className="control-section">
           <div className="section-title"><h2>表面研究</h2><span>01 / SURFACE</span></div>
           <div className="segmented" aria-label="渲染模式">{[{id:'paint',label:'材质'},{id:'clay',label:'白模'},{id:'wire',label:'线框'}].map(m=><button key={m.id} className={settings.mode===m.id?'active':''} aria-pressed={settings.mode===m.id} onClick={()=>change({mode:m.id as StudySettings['mode']})}>{m.label}</button>)}</div>

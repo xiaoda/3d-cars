@@ -2,7 +2,7 @@ import * as T from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {buildCar} from './car';
-import {A4,AXLES,DEFAULT_SETTINGS,type CameraView,type StudySettings} from '../data/a4';
+import {A4,AXLES,DEFAULT_SETTINGS,MODEL_VERSION,type CameraView,type StudySettings} from '../data/a4';
 
 export interface StudioStats {triangles:number;drawCalls:number;gpu:string;software:boolean;}
 export function createStudio(host:HTMLElement,onStats:(s:StudioStats)=>void,onError:(message:string)=>void) {
@@ -86,6 +86,11 @@ export function createStudio(host:HTMLElement,onStats:(s:StudioStats)=>void,onEr
     camera.lookAt(controls.target);controls.update();updateRulers();resize();dirty=true;
   }
   function update(next:StudySettings){settings={...next};car.update(settings);controls.autoRotate=next.rotate;updateRulers();dirty=true;}
+  /** 仅用于可复现的本地曲面检查；保持现有灯光、材质与导出尺寸。 */
+  function setInspectionPose(position:[number,number,number],target:[number,number,number]=[0,.70,0]){
+    if(![...position,...target].every(Number.isFinite)||Math.hypot(...position.map((n,i)=>n-target[i]))<.1)throw new Error('检查机位坐标无效');
+    setView('hero');controls.enableDamping=false;perspective.position.set(...position);controls.target.set(...target);controls.update();controls.enableDamping=true;dirty=true;
+  }
   async function exportFrame():Promise<Blob>{
     if(exporting)throw new Error('已有导出任务正在运行');exporting=true;
     const ratio=renderer.getPixelRatio();
@@ -99,7 +104,7 @@ export function createStudio(host:HTMLElement,onStats:(s:StudioStats)=>void,onEr
     const {GLTFExporter}=await import('three/addons/exporters/GLTFExporter.js');
     // 使用独立几何和材质，不与正在交互的场景共享引用；GLB 始终输出标准材质。
     const exportCar=buildCar();exportCar.update({...snapshot,mode:'paint'});
-    exportCar.group.userData={source:'依据 Audi 官方 04/19 尺寸图的程序化近似；非原厂模型',units:'metres',coordinateSystem:'X longitudinal (front negative), Y up, Z lateral'};
+    exportCar.group.userData={source:'依据 Audi 官方 04/19 尺寸图的程序化近似；非原厂模型',modelVersion:MODEL_VERSION,units:'metres',coordinateSystem:'X longitudinal (front negative), Y up, Z lateral'};
     try{
       const data=await new GLTFExporter().parseAsync(exportCar.group,{binary:true});
       if(!(data instanceof ArrayBuffer))throw new Error('模型导出格式错误');
@@ -111,6 +116,6 @@ export function createStudio(host:HTMLElement,onStats:(s:StudioStats)=>void,onEr
     car.dispose();ground.geometry.dispose();ground.material.dispose();environment.dispose();key.shadow.dispose();
     dimensions.traverse(o=>{if(o instanceof T.Line)o.geometry.dispose();if(o instanceof T.Sprite)o.material.dispose();});rulerMat.dispose();labelTextures.forEach(t=>t.dispose());renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
   }
-  return {update,setView,exportFrame,exportModel,dispose,inspect:()=>({view,settings:{...settings},gpu,software,triangles:modelTriangles,renderTriangles:renderer.info.render.triangles,drawCalls:renderer.info.render.calls,camera:camera.position.toArray()})};
+  return {update,setView,setInspectionPose,exportFrame,exportModel,dispose,inspect:()=>({view,settings:{...settings},gpu,software,triangles:modelTriangles,renderTriangles:renderer.info.render.triangles,drawCalls:renderer.info.render.calls,camera:camera.position.toArray(),target:controls.target.toArray()})};
 }
 export type Studio=ReturnType<typeof createStudio>;

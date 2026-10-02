@@ -8,14 +8,16 @@ export const A4 = Object.freeze({
 });
 export const AXLES = Object.freeze({ front: -A4.length / 2 + A4.frontOverhang, rear: A4.length / 2 - A4.rearOverhang });
 export const SOURCE_URL = 'https://www.audi-mediacenter.com/en/publications/dimensions/dimensions-a4-1391/download';
+export const MODEL_VERSION='0.4';
+export const MODEL_FILE_TAG='v04';
 
 /** 以下截面系依据官方侧/俯视轮廓手动估算：[纵坐标, 半宽, 车身上表面中心高度]。 */
 const sections = [
-  [-2.381, .892, .711], [-2.30, .898, .775], [-2.15, .902, .849],
-  [-1.88, .907, .925], [-1.48, .9235, .970], [-1.10, .909, .995],
-  [-.80, .900, 1.005], [-.40, .896, 1.001], [.10, .895, 1.002],
-  [.62, .907, 1.010], [1.10, .921, 1.013], [1.338, .9235, 1.016],
-  [1.67, .912, .998], [1.94, .902, .990], [2.20, .891, .979], [2.381, .874, .965],
+  [-2.381, .892, .699], [-2.30, .898, .763], [-2.15, .902, .834],
+  [-1.88, .907, .911], [-1.48, .9235, .959], [-1.10, .909, .973],
+  [-.80, .900, .991], [-.40, .896, 1.001], [.10, .895, 1.012],
+  [.62, .907, 1.026], [1.10, .921, 1.043], [1.338, .9235, 1.057],
+  [1.67, .912, 1.068], [1.94, .902, 1.068], [2.20, .891, 1.042], [2.381, .874, 1.014],
 ];
 export function sampleProfile(x: number, column: number): number {
   if (x <= sections[0][0]) return sections[0][column];

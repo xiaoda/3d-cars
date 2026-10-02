@@ -2,7 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {createCalibration,type CalibrationEngine} from '../engine/calibration';
 import {CALIBRATION_VIEWS,DEFAULT_CALIBRATION,getCalibrationView,sanitizeCalibration,type CalibrationSettings} from '../data/calibration';
 import {REFERENCE_PHOTOS,type ReferencePhoto} from '../data/references';
-import {SOURCE_URL} from '../data/a4';
+import {SOURCE_URL,MODEL_VERSION,MODEL_FILE_TAG} from '../data/a4';
 
 declare global {interface Window {__A4_CALIBRATION__?:CalibrationEngine;}}
 const STORAGE='a4-calibration-settings-v1';
@@ -25,7 +25,7 @@ export default function CalibrationWorkspace(){
   const view=getCalibrationView(settings.view);
   async function download(){
     if(!engine.current||!ready||busy||error)return;setBusy(true);setNotice('');
-    try{const blob=await engine.current.exportFrame(),url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`a4-calibration-${settings.view}-v02.png`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);setNotice('已导出 1920 × 1080 校准 PNG。');}
+    try{const blob=await engine.current.exportFrame(),url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`a4-calibration-${settings.view}-${MODEL_FILE_TAG}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);setNotice('已导出 1920 × 1080 校准 PNG。');}
     catch(e){setNotice(`导出失败：${e instanceof Error?e.message:String(e)}`);}finally{setBusy(false);}
   }
   return <main className="calibration-workspace">
@@ -33,7 +33,7 @@ export default function CalibrationWorkspace(){
       <aside className="calibration-controls">
         <div className="specimen-id"><span>证据与形态</span><span>STUDY / 02</span></div>
         <h1>先对齐，<br/><em>再精修。</em></h1>
-        <p className="calibration-intro">A4 四视外形校准<br/>工具 V0.2 / 车模仍为 V0.1</p>
+        <p className="calibration-intro">A4 四视外形校准<br/>工具 V0.2 / 车模 V{MODEL_VERSION} · 曲面精修</p>
         <section className="calibration-section"><div className="section-title"><h2>正交机位</h2><span>锁定尺度</span></div>
           <div className="calibration-views">{CALIBRATION_VIEWS.map(v=><button key={v.id} onClick={()=>change({view:v.id})} aria-pressed={settings.view===v.id} className={settings.view===v.id?'active':''}><span>{v.code}</span>{v.name}<b>↗</b></button>)}</div>
         </section>
