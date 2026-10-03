@@ -6,6 +6,7 @@
 
 - 三张开发照片共享一套米制骨架；已记录 16 个二维锚点、重复选点、粗轮廓和相机初值。
 - 支持原图 / 骨架 / 叠加、透明度、锚点残差、相机锁定、参数保存及 JSON 导入导出。
+- 近侧机位新增“原基线 / EXIF 低机位候选”比较；同一组四点存在姿态歧义与选点敏感性，没有把低 RMS 当作已标定。见 [第一轮相机复核](docs/research/bmw-g20/camera-review-round1.md)。
 - 原图必须手动选择 `references-private/bmw-g20/photos/` 中对应图号的原始 JPG，按尺寸及 SHA-256 核对；不会自动读取、上传或公开目录。
 - 当前只有比例骨架，**不是宝马车模成品，完整照片叠加视觉验收尚未完成**。动力/选装代码与尺度适用性仍保留未知或假设状态。
 - 记录：[阶段 1 验证](docs/research/bmw-g20/stage1-qa.md)、[相机数值报告](docs/research/bmw-g20/stage1-camera-report.json)、[完整开发计划](docs/plans/2026-10-03-bmw-g20-complex-modeling-plan.md)。

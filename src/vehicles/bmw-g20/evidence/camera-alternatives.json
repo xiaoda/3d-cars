@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "skeletonId": "bmw-g20-stage1-skeleton-v1",
+  "alternatives": [
+    {
+      "id": "side-exif-low",
+      "sourceId": "P90549635",
+      "label": "近侧 EXIF 低机位候选",
+      "candidateId": "P90549635-original-1.0-AP3P-1",
+      "camera": {
+        "sourceId": "P90549635",
+        "position": [
+          -0.39203065034483514,
+          0.4755496938877926,
+          12.645353268192014
+        ],
+        "quaternion": [
+          0.018312685925157727,
+          -0.0057715465664500126,
+          0.0031249773654265477,
+          0.9998107667458395
+        ],
+        "fovY": 25.986703119483288,
+        "imageWidth": 4961,
+        "imageHeight": 3307,
+        "crop": {
+          "x": 0,
+          "y": 0,
+          "width": 4961,
+          "height": 3307
+        },
+        "near": 0.05,
+        "far": 200
+      },
+      "rmsPx": 22.367745731834475,
+      "note": "相同骨架与标注的另一个局部解，不是真实相机认证；不覆盖原基线。"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {createBmwStudy,type BmwViewSettings} from '../engine/bmwStudy';
 import {BASE_CAMERAS,PHOTOS,STORAGE_KEY,defaultState,parseStudyState,pointResiduals,summarizeResiduals,verifyReferenceMeta} from '../vehicles/bmw-g20/studyData';
+import {ALTERNATIVE_CAMERAS,applyCameraChoice,identifyCameraChoice} from '../vehicles/bmw-g20/cameraReview';
 import {parseCamera,type PhotoCamera} from '../modeling/projection';
 import './bmw-workspace.css';
 
@@ -26,7 +27,9 @@ export default function BmwModelingWorkspace(){
   const summary=summarizeResiduals(residuals),rms=summary.rmsPx;
   const reviewMessage=summary.status==='complete'?'固定对应点均在画内；仅表示可以计算误差，不代表相机视觉验收通过。':summary.status==='outside-frame'?'存在画外投影或被裁掉的标注：仍按全部固定对应点计算 RMS，不能靠隐藏误差点过关。':summary.status==='invalid-projection'?'必需点位于相机平面、背面或深度范围外：整组 RMS 不可用，请恢复或修正相机。':'没有可评估的固定对应点。';
   const reasonLabels:Record<string,string>={'ok':'画内','outside-frame':'画外 / 裁剪外','depth-clipped':'深度范围外','non-projectable':'不可投影','excluded':'预先排除'};
-  const changed=JSON.stringify(camera)!==JSON.stringify(BASE_CAMERAS.find(c=>c.sourceId===sourceId));
+  const cameraChoice=identifyCameraChoice(camera),alternatives=ALTERNATIVE_CAMERAS.filter(c=>c.sourceId===sourceId);
+  const baseline=BASE_CAMERAS.find(c=>c.sourceId===sourceId)!;
+  const baselineRms=useMemo(()=>summarizeResiduals(pointResiduals(photo,baseline)).rmsPx,[photo,baseline]);
   const settings={photo,camera,mode,opacity,points,silhouette};
   const latest=useRef(settings);latest.current=settings;
   useEffect(()=>{
@@ -63,6 +66,10 @@ export default function BmwModelingWorkspace(){
     catch(e){setNotice(e instanceof Error?e.message:String(e));}
   }
   function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(parseStudyState(study)));setNotice('BMW 相机参数已保存到本浏览器；不含照片，A4 设置未更改。');}catch(e){setNotice(`保存失败：${e instanceof Error?e.message:String(e)}`);}}
+  function selectCamera(choiceId:string){
+    setStudy(s=>applyCameraChoice(s,sourceId,choiceId));setLocked(true);
+    setNotice(choiceId==='baseline'?'已恢复当前机位基线，其他机位未改变；尚未保存。':'已切换到替代相机并锁定；原图、骨架及其他机位未变。候选不等于通过验收，尚未保存。');
+  }
   async function importParameters(file:File|undefined){
     if(!file)return;
     try{if(file.size>65536)throw new Error('参数文件超过 64 KB');const next=parseStudyState(JSON.parse(await file.text()));if(!alive.current)return;setStudy(next);setLocked(true);setNotice('参数已导入并锁定；点击保存可保留到下次打开。');}
@@ -81,11 +88,16 @@ export default function BmwModelingWorkspace(){
           <label className="bmw-check"><input type="checkbox" checked={points} onChange={e=>setPoints(e.target.checked)}/> 显示锚点与残差线</label>
           <label className="bmw-check"><input type="checkbox" checked={silhouette} onChange={e=>setSilhouette(e.target.checked)}/> 显示粗轮廓标注（非三维点）</label>
         </section>
-        <section><h2><b>03</b> 相机参数 <span>{changed?'已修改':'基线'}</span></h2>
+        <section><h2><b>03</b> 相机参数 <span>{cameraChoice==='baseline'?'基线':cameraChoice==='custom'?'自定义':'候选 · 未签收'}</span></h2>
+          {alternatives.length>0&&<div className="bmw-camera-review" aria-label="相机多解比较">
+            <div className="bmw-candidate-options"><button aria-pressed={cameraChoice==='baseline'} onClick={()=>selectCamera('baseline')}>原基线</button>{alternatives.map(c=><button key={c.id} aria-pressed={cameraChoice===c.id} onClick={()=>selectCamera(c.id)}>{c.label}</button>)}</div>
+            <p>同一原图、同一骨架，比较不同位姿。原基线 X 为 {baseline.position[0].toFixed(3)} m，EXIF 候选为 {alternatives[0].camera.position[0].toFixed(3)} m（−X 指向车头），前后位置存在歧义。</p>
+            <p>原基线 RMS {baselineRms?.toFixed(1)??'—'} px，候选 {alternatives[0].rmsPx.toFixed(1)} px；低残差不能证明真实相机。第一轮重复选点复核未找到满足同一高度先验的解，暂不冻结此机位。</p>
+          </div>}
           <label className="bmw-check bmw-lock"><input type="checkbox" checked={locked} onChange={e=>setLocked(e.target.checked)}/> 锁定相机</label>
           <div className="bmw-camera-fields">{camera.position.map((v,i)=><label key={i}>位置 {['X','Y','Z'][i]} / m<input aria-label={`相机位置 ${['X','Y','Z'][i]}`} type="number" step=".02" min="-50" max="50" value={Number(v.toFixed(4))} disabled={locked} onChange={e=>{const position=[...camera.position] as PhotoCamera['position'];position[i]=Number(e.target.value);changeCamera({position});}}/></label>)}<label>垂直视场角 / °<input aria-label="相机垂直视场角" type="number" step=".1" min="5" max="120" value={Number(camera.fovY.toFixed(4))} disabled={locked} onChange={e=>changeCamera({fovY:Number(e.target.value)})}/></label></div>
           <p className="bmw-help">旋转沿用当前初值；尺度固定，未进行完整镜头标定。EXIF 只作先验。</p>
-          <div className="bmw-action-row"><button onClick={save}>保存参数</button><button onClick={()=>{setStudy(s=>({...s,cameras:s.cameras.map(c=>c.sourceId===sourceId?structuredClone(BASE_CAMERAS.find(c=>c.sourceId===sourceId)!):c)}));setLocked(true);setNotice('已恢复当前机位基线，其他机位未改变。');}}>恢复此机位</button></div>
+          <div className="bmw-action-row"><button onClick={save}>保存参数</button><button onClick={()=>selectCamera('baseline')}>恢复此机位</button></div>
           <div className="bmw-action-row"><button onClick={()=>downloadJson(study)}>导出 JSON</button><label className="bmw-import">导入 JSON<input aria-label="导入 BMW 相机参数" type="file" accept=".json,application/json" onChange={e=>{void importParameters(e.target.files?.[0]);e.target.value='';}}/></label></div>
         </section>
       </aside>
@@ -94,7 +106,7 @@ export default function BmwModelingWorkspace(){
         <div className="bmw-viewport-wrap"><div className="bmw-canvas" ref={host}/>{imageStatus==='未载入原图'&&<div className="bmw-empty-note">{mode==='reference'?'原图尚未载入，当前仅显示已开启的标注':'当前显示共用骨架和已有标注'}<br/><span>选择原图后进行同角度叠加，不会自动读取本机文件</span></div>}{error&&<div className="bmw-error" role="alert">{error}</div>}</div>
         <div className="bmw-legend"><span><i className="bmw-cyan"/>共用三维骨架</span><span><i className="bmw-amber"/>人工二维锚点</span><span><i className="bmw-red"/>重投影残差</span><small>−X 车头 · +Y 向上 · +Z 左侧 · m</small></div>
         <div className="bmw-metrics"><div><span>固定锚点 RMS</span><strong>{rms===null?'—':rms.toFixed(1)}<small>px</small></strong></div><div><span>相对车身 ROI 宽</span><strong>{rms===null?'—':(rms/photo.roi.width*100).toFixed(2)}<small>%</small></strong></div><div><span>画内 / 固定对应点</span><strong>{summary.inFrameCount}<small>/ {summary.requiredCount}</small></strong></div><p>这是<strong>近似骨架的拟合内残差</strong>，不是车身表面精度或独立验证。没有精细模型，不能据此判断还原度。</p></div>
-        <div className="bmw-review-status" data-status={summary.status} role="status">{reviewMessage}{sourceId==='P90549635'&&<p>近侧机位只有 4 个对应点；初值焦距位于试验下界，姿态与深度约束较弱，必须重点叠图复核。</p>}</div>
+        <div className="bmw-review-status" data-status={summary.status} role="status">{reviewMessage}{sourceId==='P90549635'&&<p>近侧机位只有 4 个对应点；原基线焦距位于试验下界。本轮发现另一低机位候选与明显选点敏感性，请在相机参数区比较，不能仅按 RMS 决定。</p>}</div>
         <details className="bmw-residuals"><summary>逐点残差与标注重复性</summary><table><thead><tr><th>锚点</th><th>状态</th><th>残差 / px</th><th>重复选点差 / px</th></tr></thead><tbody>{residuals.map((p,i)=><tr key={p.id}><td>{i+1}. {p.id}</td><td>{reasonLabels[p.reason]}</td><td>{p.required&&p.errorPx!==null?p.errorPx.toFixed(1):'—'}</td><td>{photo.points[i].repeatDeltaPx.toFixed(1)}</td></tr>)}</tbody></table></details>
         <div className="bmw-notice" role="status">{notice||'研究状态：原厂动力及选装仍未知；当前三个机位共用一套骨架。'}</div>
       </section>
