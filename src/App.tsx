@@ -28,7 +28,7 @@ export default function App(){
   const [stats,setStats]=useState<StudioStats|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(''),[notice,setNotice]=useState('');
   const currentSettings=useRef(settings);currentSettings.current=settings;
   useEffect(()=>{const onHash=()=>setWorkspace(workspaceFromHash(location.hash));window.addEventListener('hashchange',onHash);return()=>window.removeEventListener('hashchange',onHash);},[]);
-  useEffect(()=>{document.title=workspace==='bmw'?'BMW G20 · 相机与骨架研究':'A4 形态研究室 · 纯代码车模实验';},[workspace]);
+  useEffect(()=>{document.title=workspace==='bmw'?'BMW G20 · 局部曲面技术小样':'A4 形态研究室 · 纯代码车模实验';},[workspace]);
   useEffect(()=>{
     if(workspace!=='studio')return;
     setStats(null);setError('');setView('hero');
@@ -50,7 +50,7 @@ export default function App(){
   return <div className="app-shell">
     <header className="header">
       <a className="brand" href="#" aria-label="A4 形态研究室首页"><span className="brand-symbol"><i/><i/><i/></span><span>形态研究室<span className="brand-en">FORM / LAB</span></span></a>
-      <nav className="workspace-switch" aria-label="研究工作区">{([{id:'studio',name:'摄影棚'},{id:'calibration',name:'外形校准'},{id:'bmw',name:'BMW 曲面研究'}] as const).map(w=><button key={w.id} className={workspace===w.id?'active':''} aria-pressed={workspace===w.id} onClick={()=>{setWorkspace(w.id);history.replaceState(null,'',`#${w.id}`);}}>{w.name}{w.id==='calibration'&&<small>V0.2</small>}{w.id==='bmw'&&<small>01</small>}</button>)}</nav>
+      <nav className="workspace-switch" aria-label="研究工作区">{([{id:'studio',name:'摄影棚'},{id:'calibration',name:'外形校准'},{id:'bmw',name:'BMW 曲面研究'}] as const).map(w=><button key={w.id} className={workspace===w.id?'active':''} aria-pressed={workspace===w.id} onClick={()=>{setWorkspace(w.id);history.replaceState(null,'',`#${w.id}`);}}>{w.name}{w.id==='calibration'&&<small>V0.2</small>}{w.id==='bmw'&&<small>02</small>}</button>)}</nav>
       <div className="header-actions">{workspace!=='bmw'&&<button className="text-button" aria-label="官方依据" onClick={()=>dialog.current?.showModal()}><Icon name="book"/> 官方依据</button>}{workspace==='studio'&&<><button className="export-model" disabled={!stats||!!busy} onClick={()=>download('glb')}><Icon name="cube"/> {busy==='glb'?'导出中…':'导出车模'}</button><button className="primary-button" disabled={!stats||!!busy} onClick={()=>download('png')}><Icon name="download"/> {busy==='png'?'正在出图…':'保存画面'}</button></>}</div>
     </header>
     {workspace==='bmw'?<Suspense fallback={<main role="status">正在载入 BMW 相机研究工作台…</main>}><BmwModelingWorkspace/></Suspense>:workspace==='calibration'?<CalibrationWorkspace/>:<main className="workspace">

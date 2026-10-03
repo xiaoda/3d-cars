@@ -266,5 +266,29 @@
       "U03"
     ],
     "note": "不变更 partial 或任何未知事实，不把参数 pending 改成 confirmed。"
+  },
+  "surfaceStudyApproval": {
+    "approvedOn": "2026-10-03",
+    "basis": "用户确认将近侧图暂作辅助参考，开始机盖—灯角—翼子板局部白模。",
+    "allowFrontCornerPrototype": true,
+    "allowFullCar": false,
+    "allowCompleteFrontAssembly": false,
+    "cameraGatePassed": false,
+    "cameraPolicy": {
+      "provisionalWorking": [
+        "P90549627",
+        "P90549630"
+      ],
+      "qualitativeOnly": [
+        "P90549635"
+      ]
+    },
+    "scope": [
+      "bicubic-patches",
+      "shared-boundary-tests",
+      "open-lamp-aperture",
+      "neutral-local-prototype"
+    ],
+    "note": "有限技术小样授权，不改 partial、未知配置、尺度 pending 或完整曲面开发授权；不代表展示验收。"
   }
 }
