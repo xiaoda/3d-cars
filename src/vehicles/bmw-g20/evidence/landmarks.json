@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 1,
+  "skeletonId": "bmw-g20-stage1-skeleton-v1",
+  "method": "人工读图；原图坐标，重复标注单独记录；三维对应全部为骨架假设而非实车测量。",
+  "photos": [
+    {
+      "sourceId": "P90549627",
+      "title": "右前角 / 相机 A",
+      "role": "fit",
+      "imageWidth": 4961,
+      "imageHeight": 3309,
+      "sha256": "fc0dba27061a44c9551b913ab6cd0b6823cecff6ac9df4c597ea97a22b499a4e",
+      "exifFocalMm": 50,
+      "cropVerified": false,
+      "roi": {
+        "x": 715.7276041666667,
+        "y": 1101.2765625,
+        "width": 3276.3270833333336,
+        "height": 1354.6218749999998
+      },
+      "points": [
+        {
+          "id": "hub-front-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2328,
+            2099
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            2328,
+            2097
+          ],
+          "repeatDeltaPx": 2
+        },
+        {
+          "id": "hub-rear-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            956,
+            2029
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            964,
+            2029
+          ],
+          "repeatDeltaPx": 8
+        },
+        {
+          "id": "wind-bottom-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            1915,
+            1486
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            1920,
+            1486
+          ],
+          "repeatDeltaPx": 5
+        },
+        {
+          "id": "wind-top-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            1754,
+            1135
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            1747,
+            1137
+          ],
+          "repeatDeltaPx": 7.280109889280519
+        },
+        {
+          "id": "wind-bottom-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2997,
+            1448
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2997,
+            1450
+          ],
+          "repeatDeltaPx": 2
+        },
+        {
+          "id": "wind-top-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2579,
+            1189
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2576,
+            1194
+          ],
+          "repeatDeltaPx": 5.8309518948453
+        }
+      ],
+      "silhouette": {
+        "kind": "view-dependent",
+        "use": "display-only",
+        "points": [
+          [
+            718,
+            1776
+          ],
+          [
+            796,
+            1577
+          ],
+          [
+            1034,
+            1349
+          ],
+          [
+            1390,
+            1140
+          ],
+          [
+            1687,
+            1112
+          ],
+          [
+            2318,
+            1145
+          ],
+          [
+            2620,
+            1212
+          ],
+          [
+            3008,
+            1440
+          ],
+          [
+            3571,
+            1533
+          ],
+          [
+            3873,
+            1688
+          ],
+          [
+            3969,
+            2148
+          ],
+          [
+            3814,
+            2231
+          ],
+          [
+            2553,
+            2402
+          ],
+          [
+            1186,
+            2257
+          ],
+          [
+            778,
+            2195
+          ]
+        ]
+      },
+      "repeatMethod": "同一审阅者第二次目视读图，非独立人员测量；仅评估选点重复性"
+    },
+    {
+      "sourceId": "P90549630",
+      "title": "左前角 / 相机 B",
+      "role": "fit",
+      "imageWidth": 4961,
+      "imageHeight": 3307,
+      "sha256": "7346e6602b5e926457df5afa0961d31ac9f19cbcd7d17b523e2a7f3ff8498a5f",
+      "exifFocalMm": 56,
+      "cropVerified": false,
+      "roi": {
+        "x": 1023.2062500000001,
+        "y": 1147.115625,
+        "width": 3493.3708333333334,
+        "height": 1436.4781249999999
+      },
+      "points": [
+        {
+          "id": "hub-front-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2669,
+            2230
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            2669,
+            2232
+          ],
+          "repeatDeltaPx": 2
+        },
+        {
+          "id": "hub-rear-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            4207,
+            2111
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            4209,
+            2111
+          ],
+          "repeatDeltaPx": 2
+        },
+        {
+          "id": "wind-bottom-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            3108,
+            1568
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            3114,
+            1566
+          ],
+          "repeatDeltaPx": 6.324555320336759
+        },
+        {
+          "id": "wind-top-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            3289,
+            1201
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            3294,
+            1217
+          ],
+          "repeatDeltaPx": 16.76305461424021
+        },
+        {
+          "id": "wind-bottom-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2041,
+            1527
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2062,
+            1527
+          ],
+          "repeatDeltaPx": 21
+        },
+        {
+          "id": "wind-top-right",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2462,
+            1230
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2468,
+            1232
+          ],
+          "repeatDeltaPx": 6.324555320336759
+        }
+      ],
+      "silhouette": {
+        "kind": "view-dependent",
+        "use": "display-only",
+        "points": [
+          [
+            1031,
+            2263
+          ],
+          [
+            1039,
+            1979
+          ],
+          [
+            1142,
+            1762
+          ],
+          [
+            1424,
+            1641
+          ],
+          [
+            2046,
+            1527
+          ],
+          [
+            2452,
+            1230
+          ],
+          [
+            3318,
+            1160
+          ],
+          [
+            3752,
+            1196
+          ],
+          [
+            4020,
+            1323
+          ],
+          [
+            4227,
+            1498
+          ],
+          [
+            4455,
+            1713
+          ],
+          [
+            4496,
+            2033
+          ],
+          [
+            4398,
+            2193
+          ],
+          [
+            4062,
+            2343
+          ],
+          [
+            2979,
+            2460
+          ],
+          [
+            2403,
+            2563
+          ],
+          [
+            1217,
+            2395
+          ]
+        ]
+      },
+      "repeatMethod": "同一审阅者第二次目视读图，非独立人员测量；仅评估选点重复性"
+    },
+    {
+      "sourceId": "P90549635",
+      "title": "近左侧 / 相机 C",
+      "role": "fit",
+      "imageWidth": 4961,
+      "imageHeight": 3307,
+      "sha256": "fd6b623cf1b7fcb97bb45de76bc89492e392ab9a0b2051dafe418b2b7e413074",
+      "exifFocalMm": 52,
+      "cropVerified": false,
+      "roi": {
+        "x": 1338.4364583333333,
+        "y": 1325.38359375,
+        "width": 2793.1463541666667,
+        "height": 875.83828125
+      },
+      "points": [
+        {
+          "id": "hub-front-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            1767,
+            1995
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            1767,
+            1995
+          ],
+          "repeatDeltaPx": 0
+        },
+        {
+          "id": "hub-rear-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            3519,
+            2000
+          ],
+          "uncertaintyPx": 10,
+          "repeatPixel": [
+            3517,
+            1997
+          ],
+          "repeatDeltaPx": 3.6055512754639896
+        },
+        {
+          "id": "wind-bottom-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2204,
+            1615
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2217,
+            1610
+          ],
+          "repeatDeltaPx": 13.92838827718412
+        },
+        {
+          "id": "wind-top-left",
+          "kind": "fixed",
+          "use": "camera",
+          "visibility": "visible",
+          "pixel": [
+            2543,
+            1372
+          ],
+          "uncertaintyPx": 26,
+          "repeatPixel": [
+            2545,
+            1372
+          ],
+          "repeatDeltaPx": 2
+        }
+      ],
+      "silhouette": {
+        "kind": "view-dependent",
+        "use": "display-only",
+        "points": [
+          [
+            1338,
+            2041
+          ],
+          [
+            1346,
+            1858
+          ],
+          [
+            1385,
+            1741
+          ],
+          [
+            1599,
+            1654
+          ],
+          [
+            2181,
+            1591
+          ],
+          [
+            2530,
+            1380
+          ],
+          [
+            2695,
+            1336
+          ],
+          [
+            3129,
+            1346
+          ],
+          [
+            3400,
+            1411
+          ],
+          [
+            3685,
+            1527
+          ],
+          [
+            4051,
+            1576
+          ],
+          [
+            4059,
+            1716
+          ],
+          [
+            4124,
+            1816
+          ],
+          [
+            4126,
+            2013
+          ],
+          [
+            3713,
+            2069
+          ],
+          [
+            3297,
+            2075
+          ],
+          [
+            1992,
+            2085
+          ],
+          [
+            1527,
+            2075
+          ]
+        ]
+      },
+      "repeatMethod": "同一审阅者第二次目视读图，非独立人员测量；仅评估选点重复性"
+    }
+  ]
+}

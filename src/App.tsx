@@ -1,7 +1,9 @@
-import {useEffect,useRef,useState} from 'react';
+import {lazy,Suspense,useEffect,useRef,useState} from 'react';
 import {createStudio,type Studio,type StudioStats} from './engine/studio';
 import {A4,DEFAULT_SETTINGS,PAINTS,SOURCE_URL,MODEL_VERSION,MODEL_FILE_TAG,sanitizeSettings,type StudySettings,type CameraView} from './data/a4';
 import CalibrationWorkspace from './components/CalibrationWorkspace';
+import {workspaceFromHash,type Workspace} from './data/workspace';
+const BmwModelingWorkspace=lazy(()=>import('./components/BmwModelingWorkspace'));
 
 declare global {interface Window {__A4_STUDY__?:Studio;}}
 function Icon({name,size=18}:{name:string;size?:number}) {
@@ -20,11 +22,13 @@ function Icon({name,size=18}:{name:string;size?:number}) {
 const views:{id:CameraView;name:string;code:string}[]=[{id:'hero',name:'前侧视角',code:'01'},{id:'side',name:'正侧',code:'02'},{id:'front',name:'正前',code:'03'},{id:'rear',name:'正后',code:'04'},{id:'top',name:'俯视',code:'05'}];
 function loadSettings(){try{return sanitizeSettings(JSON.parse(localStorage.getItem('a4-study-settings-v1')??'null'));}catch{return {...DEFAULT_SETTINGS};}}
 export default function App(){
-  const [workspace,setWorkspace]=useState<'studio'|'calibration'>(()=>location.hash==='#calibration'?'calibration':'studio');
+  const [workspace,setWorkspace]=useState<Workspace>(()=>workspaceFromHash(location.hash));
   const host=useRef<HTMLDivElement>(null),studio=useRef<Studio|null>(null),dialog=useRef<HTMLDialogElement>(null);
   const [settings,setSettings]=useState<StudySettings>(loadSettings),[view,setView]=useState<CameraView>('hero');
   const [stats,setStats]=useState<StudioStats|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(''),[notice,setNotice]=useState('');
   const currentSettings=useRef(settings);currentSettings.current=settings;
+  useEffect(()=>{const onHash=()=>setWorkspace(workspaceFromHash(location.hash));window.addEventListener('hashchange',onHash);return()=>window.removeEventListener('hashchange',onHash);},[]);
+  useEffect(()=>{document.title=workspace==='bmw'?'BMW G20 · 局部曲面技术小样':'A4 形态研究室 · 纯代码车模实验';},[workspace]);
   useEffect(()=>{
     if(workspace!=='studio')return;
     setStats(null);setError('');setView('hero');
@@ -46,10 +50,10 @@ export default function App(){
   return <div className="app-shell">
     <header className="header">
       <a className="brand" href="#" aria-label="A4 形态研究室首页"><span className="brand-symbol"><i/><i/><i/></span><span>形态研究室<span className="brand-en">FORM / LAB</span></span></a>
-      <nav className="workspace-switch" aria-label="研究工作区">{([{id:'studio',name:'摄影棚'},{id:'calibration',name:'外形校准'}] as const).map(w=><button key={w.id} className={workspace===w.id?'active':''} aria-pressed={workspace===w.id} onClick={()=>{setWorkspace(w.id);history.replaceState(null,'',w.id==='calibration'?'#calibration':'#studio');}}>{w.name}{w.id==='calibration'&&<small>V0.2</small>}</button>)}</nav>
-      <div className="header-actions"><button className="text-button" aria-label="官方依据" onClick={()=>dialog.current?.showModal()}><Icon name="book"/> 官方依据</button>{workspace==='studio'&&<><button className="export-model" disabled={!stats||!!busy} onClick={()=>download('glb')}><Icon name="cube"/> {busy==='glb'?'导出中…':'导出车模'}</button><button className="primary-button" disabled={!stats||!!busy} onClick={()=>download('png')}><Icon name="download"/> {busy==='png'?'正在出图…':'保存画面'}</button></>}</div>
+      <nav className="workspace-switch" aria-label="研究工作区">{([{id:'studio',name:'摄影棚'},{id:'calibration',name:'外形校准'},{id:'bmw',name:'BMW 曲面研究'}] as const).map(w=><button key={w.id} className={workspace===w.id?'active':''} aria-pressed={workspace===w.id} onClick={()=>{setWorkspace(w.id);history.replaceState(null,'',`#${w.id}`);}}>{w.name}{w.id==='calibration'&&<small>V0.2</small>}{w.id==='bmw'&&<small>02</small>}</button>)}</nav>
+      <div className="header-actions">{workspace!=='bmw'&&<button className="text-button" aria-label="官方依据" onClick={()=>dialog.current?.showModal()}><Icon name="book"/> 官方依据</button>}{workspace==='studio'&&<><button className="export-model" disabled={!stats||!!busy} onClick={()=>download('glb')}><Icon name="cube"/> {busy==='glb'?'导出中…':'导出车模'}</button><button className="primary-button" disabled={!stats||!!busy} onClick={()=>download('png')}><Icon name="download"/> {busy==='png'?'正在出图…':'保存画面'}</button></>}</div>
     </header>
-    {workspace==='calibration'?<CalibrationWorkspace/>:<main className="workspace">
+    {workspace==='bmw'?<Suspense fallback={<main role="status">正在载入 BMW 相机研究工作台…</main>}><BmwModelingWorkspace/></Suspense>:workspace==='calibration'?<CalibrationWorkspace/>:<main className="workspace">
       <aside className="sidebar">
         <div className="specimen-id"><span>汽车形态研究</span><span>NO. 001</span></div>
         <div className="specimen-heading"><h1>Audi <em>A4</em><span>从二维资料，到三维形态。</span></h1><p>B9 中期改款 · 欧洲标准轴距三厢</p></div>
@@ -83,7 +87,7 @@ export default function App(){
         <div className="stage-footer"><span><i className="status-dot"/>{stats?'场景就绪':'正在初始化'}<b>WEBGL 2</b></span><span title={stats?.gpu}>{stats?`${(stats.triangles/1000).toFixed(1)}k 三角面`:'—'} <i>/</i> {stats?.software?'软件渲染环境':'本地渲染'}</span></div>
       </section>
     </main>}
-    <footer className="footer"><span>公开信息 → 参数约束 → 程序化曲面 → 视觉校验</span><span>外观研究原型 <i>·</i> 非 Audi 官方作品 <span className="footer-mark">A4 — 001</span></span></footer>
+    <footer className="footer"><span>公开信息 → 参数约束 → 程序化曲面 → 视觉校验</span><span>外观研究原型 <i>·</i> 非 {workspace==='bmw'?'BMW':'Audi'} 官方作品 <span className="footer-mark">{workspace==='bmw'?'G20 — 002':'A4 — 001'}</span></span></footer>
     <dialog ref={dialog} className="reference-dialog"><div className="dialog-header"><div><span className="eyebrow">REFERENCE / 01</span><h2>每一条尺寸，都有出处。</h2></div><button className="close-button" aria-label="关闭官方依据" onClick={()=>dialog.current?.close()}><Icon name="cross"/></button></div><div className="reference-content"><div className="reference-sheet"><img src="/references/audi-a4-dimensions.png" alt="Audi A4 官方 04/19 前后侧俯四视尺寸图"/></div><div className="reference-copy"><h3>官方尺寸图</h3><p>2019 年 4 月 · 空载尺寸 · 单位 mm</p><a href="/references/audi-a4-dimensions.pdf" target="_blank" rel="noreferrer">打开本地原始 PDF <Icon name="arrow" size={15}/></a><a href={SOURCE_URL} target="_blank" rel="noreferrer">访问 Audi 官方来源 <Icon name="arrow" size={15}/></a><hr/><h3>事实与估算，分开记录。</h3><dl><dt><span className="confidence fact"/>官方明确</dt><dd>长宽高、轴距、轮距、前后悬及含镜宽度。高度不含天线增加量。</dd><dt><span className="confidence estimate"/>图像估算</dt><dd>曲面截面、灯组轮廓、车窗曲率、轮胎与轮毂细节。</dd><dt><span className="confidence simplified"/>暂时简化</dt><dd>内饰、底盘、灯腔、门机构与车漆微观结构。没有毫米级表面精度保证。</dd></dl><div className="reference-warning">本轮不使用现成三维车模，不提取官网配置器模型，也不以 AI 图片作为建模依据。</div></div></div><div className="dialog-footer">素材仅作本地研究参考；公开发布与商业使用需另行核对相关条款。</div></dialog>
     {notice&&<div className="toast" role="status">{notice}</div>}
   </div>;

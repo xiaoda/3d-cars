@@ -1,0 +1,1013 @@
+{
+  "schemaVersion": 1,
+  "inspectedOn": "2026-10-03",
+  "sources": [
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "BMW2024_RELEASE",
+      "kind": "web",
+      "url": "https://www.press.bmwgroup.com/global/article/detail/T0442333EN/the-new-bmw-3-series-sedan-the-new-bmw-3-series-touring?language=en",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-family"
+      ],
+      "storage": {
+        "mode": "remote-only",
+        "path": null,
+        "sha256": null,
+        "bytes": null
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": false
+      },
+      "summary": "2024 更新与投产节点说明；不能证明宣传车的完整选装。"
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "BMW2024_GALLERY",
+      "kind": "web",
+      "url": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": null,
+      "appliesTo": [
+        "g20-2024-blue-1152",
+        "g20-2024-family"
+      ],
+      "storage": {
+        "mode": "remote-only",
+        "path": null,
+        "sha256": null,
+        "bytes": null
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "summary": "来源索引及图号标题；区域站点不代表拍摄车辆的销售市场。"
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "BMW2024_SPECS",
+      "kind": "document",
+      "url": "https://www.press.bmwgroup.com/global/article/attachment/T0442333EN/620072",
+      "publishedOn": "2024-05",
+      "appliesTo": [
+        "g20-2024-330i-xdrive-base"
+      ],
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/documents/specs-2024.pdf",
+        "sha256": "c9060b12c850316fc84976816e6a4f54497c073cfc020ac66ae9912a3bd5c75a",
+        "bytes": 406786
+      },
+      "pageCount": 24,
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "summary": "第 11 页是 330i xDrive 基础规格；不是照片样车的 995M/M Sport 装车测量值。"
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "BMW_DE_2024_PRICE",
+      "kind": "document",
+      "url": "https://www.bmw.de/content/dam/bmw/marketDE/bmw_de/new-vehicles/3-series/sedan/2024/preisliste-bmw3er.pdf.coredownload.pdf",
+      "publishedOn": "2024-05-29",
+      "edition": "2024-07 / Ausgabe 1",
+      "appliesTo": [
+        "g20-2024-family",
+        "g20-2024-330i-xdrive-base"
+      ],
+      "storage": {
+        "mode": "remote-only",
+        "path": null,
+        "sha256": null,
+        "bytes": null
+      },
+      "pageCount": 25,
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": false
+      },
+      "summary": "第 4 页车型、第 11 页 Pro 关联配置、第 24 页通用尺寸图的文本已读；本地下载超时、浏览器 ERR_ABORTED，图面未目视，不作正投影主证。"
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549614",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549614&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549614.jpg",
+        "sha256": "127b902e7082d12cecb80afde14a96d7d66286085808109e7cbe78d5d59e2342",
+        "bytes": 7732501
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3259
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": null,
+        "focalLengthMm": null,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态双车图；仅蓝色三厢是目标，红色 Touring 排除。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549623",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549623&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "rear-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549623.jpg",
+        "sha256": "a0a17f1d7bedd40b99f47e6053b4325d3b4b3a477084b582ffad1765ab0b627c",
+        "bytes": 6008080
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3315
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": null,
+        "focalLengthMm": null,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "建筑背景后侧图；可补轮廓，不代替正后。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549624",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549624&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-right",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549624.jpg",
+        "sha256": "edb32aab87204632bfc5855f4d65a3123feb1341f778834941c14cf079785f57",
+        "bytes": 3475668
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 48,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "行驶图，车轮运动模糊；不用于静态轴高和轮胎尺度。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549625",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549625&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "high-front-right",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549625.jpg",
+        "sha256": "900dd04d5405d932fe077159ce339ab0692a064c5ea7c1e3ae966bc1a396ec1d",
+        "bytes": 4021824
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 56,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "较高机位行驶图；机盖及车顶辅助，不是真俯视。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549626",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549626&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549626.jpg",
+        "sha256": "258114529ed31a2bdfb1794283396c95a2383e7dec13924bdca33f9206dcec7a",
+        "bytes": 2880242
+      },
+      "pixels": {
+        "width": 3307,
+        "height": 4961
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 57,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "行驶竖图；不用于静态姿态标定。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549627",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549627&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-right",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549627.jpg",
+        "sha256": "fc0dba27061a44c9551b913ab6cd0b6823cecff6ac9df4c597ea97a22b499a4e",
+        "bytes": 5267939
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3309
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R5",
+        "focalLengthMm": 50,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态右前全车主图；用于鼻部突出量与车头整体。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549628",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549628&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549628.jpg",
+        "sha256": "5c841d2d78c8a8ef9e267901282e8cdfe67aebc8ebceacfa78567e3375840aec",
+        "bytes": 3273366
+      },
+      "pixels": {
+        "width": 3307,
+        "height": 4961
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 50,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "强逆光/耀斑；不以高光当形状边界。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "holdout",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549629",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549629&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "low-front-right",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549629.jpg",
+        "sha256": "650b0899e973d857622e1174332fb1551c6fffdd3066966a7ad91315ca5fdd07",
+        "bytes": 3834718
+      },
+      "pixels": {
+        "width": 3307,
+        "height": 4961
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 43,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态右前低机位；车头留出检查，与 27 同一次摄影仍有相关性。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549630",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549630&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549630.jpg",
+        "sha256": "7346e6602b5e926457df5afa0961d31ac9f19cbcd7d17b523e2a7f3ff8498a5f",
+        "bytes": 4078914
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 56,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态左前全车主图；与 27 交叉约束车头。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "holdout",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549631",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549631&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "low-front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549631.jpg",
+        "sha256": "5e03b1605219c6de25a35f1ed3878604fad2280992d1b52f42234fcb69b2f3a9",
+        "bytes": 3510798
+      },
+      "pixels": {
+        "width": 3307,
+        "height": 4961
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 42,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态左前低机位竖图；留出检查，不按验证图反复调参。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549632",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549632&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "high-front-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549632.jpg",
+        "sha256": "445dd2069058ac436b745abcf79ab9798a8f2fd3129205287df83ae2f9f5c684",
+        "bytes": 4168726
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 64,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "略高左前偏侧图；辅助车顶，不代替俯视。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549633",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549633&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "rear-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549633.jpg",
+        "sha256": "2653c08e2b98647f6511bcc1663d36f35a8fe38f0f7f77ec45d37dfba8ded4d4",
+        "bytes": 4464473
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 60,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态左后主图；只作一级后部轮廓依据。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "holdout",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549634",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549634&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "rear-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549634.jpg",
+        "sha256": "530e19f0b31c8e19d9fb741f8858c59e7b7d7a3703f896f1ff9d60051f15ff8c",
+        "bytes": 5911228
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3308
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R5",
+        "focalLengthMm": 48,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "静态左后留出；与 33 接近，不夸大独立视角覆盖。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549635",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549635&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "side-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549635.jpg",
+        "sha256": "fd6b623cf1b7fcb97bb45de76bc89492e392ab9a0b2051dafe418b2b7e413074",
+        "bytes": 3233285
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 52,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "接近左正侧，仍有透视；不得直接按正投影量取所有尺寸。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "holdout",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549636",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549636&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "low-side-left",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549636.jpg",
+        "sha256": "2501c3d04de3507a678bb4b1ac7289de5379dfcd592c75a9a36cbe2694878e09",
+        "bytes": 2923832
+      },
+      "pixels": {
+        "width": 3307,
+        "height": 4961
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 52,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "左侧低机位竖图；与 35 近似，仅有限留出证据。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549637",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549637&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left-detail",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549637.jpg",
+        "sha256": "a7212c79740f56ade5c5da576bc7c00003d785adc5e62aefb92c3e004669fdbf",
+        "bytes": 5438941
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 52,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "机盖/灯角/轮拱近景，逆光；辅助截面走向。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549638",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549638&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left-wheel-detail",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549638.jpg",
+        "sha256": "8e01faf53bd5db3d1849a6f86e9e0f0c62631aab121be646c25b2e14ab745f74",
+        "bytes": 5935869
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 50,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "995M/红卡钳近景；胎侧可读 225/40 R19，仅前胎照片观察。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "fit",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549639",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549639&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-blue-1152"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "front-left-detail",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549639.jpg",
+        "sha256": "8043757182c08eff6656247aaf05ea5bdb29852e935aca36d90d54310db94178",
+        "bytes": 4362451
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 69,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "灯角、双肾纵栅、下部蜂窝和侧口；不能据此确认灯具选装代码。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549640",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549640&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-family"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "interior",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549640.jpg",
+        "sha256": "0360a06ef2caa8ea9b2cb6c103c1ff23ba06e3ce2a81d6e93136a28432a17f43",
+        "bytes": 4595944
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3309
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R5",
+        "focalLengthMm": 35,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "内饰；只确认同一发布图组，不证明与蓝车完全相同配置。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549641",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549641&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-29",
+      "appliesTo": [
+        "g20-2024-family"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "interior",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549641.jpg",
+        "sha256": "fb3a5cd0c65e5e5e0e753597287a335f5f778253da3a4275eeb2e4cbf1b2ba35",
+        "bytes": 5414560
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3309
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R5",
+        "focalLengthMm": 26,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "内饰；不计外观覆盖。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549642",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549642&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-family"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "interior",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549642.jpg",
+        "sha256": "574473412e5ccd9fd8e03c06df3ad08a0423e25c6fd8e5877350c70dc71bfb62",
+        "bytes": 6125557
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 41,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "屏幕/出风口；不计外观覆盖。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    },
+    {
+      "role": "auxiliary",
+      "publicResource": false,
+      "publicationPermission": "not-verified",
+      "permissionEvidence": null,
+      "accessedOn": "2026-10-03",
+      "id": "P90549644",
+      "kind": "photo",
+      "url": "https://mediapool.bmwgroup.com/download/edown/pressclub/publicq?dokNo=P90549644&attachment=1&actEvent=image",
+      "indexUrl": "https://www.press.bmwgroup.com/usa/photo/search/category:photo/tag:112,108/model:6781",
+      "publishedOn": "2024-05-23",
+      "appliesTo": [
+        "g20-2024-family"
+      ],
+      "group": "bmw-official-2024-may",
+      "view": "interior",
+      "storage": {
+        "mode": "local-private",
+        "path": "references-private/bmw-g20/photos/P90549644.jpg",
+        "sha256": "46d64729966af50a0d6695f259fe92c6572323802fc0a593f203dded112de109",
+        "bytes": 4598194
+      },
+      "pixels": {
+        "width": 4961,
+        "height": 3307
+      },
+      "review": {
+        "textReviewed": true,
+        "imageReviewed": true
+      },
+      "exif": {
+        "camera": "Canon EOS R3",
+        "focalLengthMm": 52,
+        "software": "Adobe Photoshop 25.3 (Macintosh)",
+        "cropVerified": false
+      },
+      "limitations": [
+        "中控近景；不计外观覆盖。",
+        "EXIF 仅作为相机初值；官方图片有后期记录，裁剪和透视修正未核定。"
+      ]
+    }
+  ]
+}
