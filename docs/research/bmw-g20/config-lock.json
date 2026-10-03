@@ -248,5 +248,23 @@
     "P90462920/P90462921 设计效果图作为测量主证",
     "未知版权的第三方车模"
   ],
-  "proposedNextDecision": "建议以这辆官图样车的可见外观为固定目标，若接受保留动力/选装代码未知，则记录该范围调整后仅推进相机与骨架试验；不自动认定完整配置锁定。"
+  "proposedNextDecision": "建议以这辆官图样车的可见外观为固定目标，若接受保留动力/选装代码未知，则记录该范围调整后仅推进相机与骨架试验；不自动认定完整配置锁定。",
+  "studyApproval": {
+    "date": "2026-10-03",
+    "basis": "用户在阶段 0 审阅建议后要求开始下一阶段开发",
+    "scope": "visible-exterior-camera-study",
+    "allowedTasks": [
+      2,
+      3,
+      4
+    ],
+    "allowCameraStudy": true,
+    "allowDetailedSurfaces": false,
+    "unresolvedIds": [
+      "U01",
+      "U02",
+      "U03"
+    ],
+    "note": "不变更 partial 或任何未知事实，不把参数 pending 改成 confirmed。"
+  }
 }

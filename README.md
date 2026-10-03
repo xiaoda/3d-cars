@@ -1,5 +1,17 @@
 # A4 形态研究室
 
+## BMW G20 独立研究分支
+
+新增 **阶段 1：相机与骨架工作台**，入口为开发服务地址后的 `/#bmw`，也可点击顶部“BMW 曲面研究”。A4 的摄影棚、校准页和本地设置保留。
+
+- 三张开发照片共享一套米制骨架；已记录 16 个二维锚点、重复选点、粗轮廓和相机初值。
+- 支持原图 / 骨架 / 叠加、透明度、锚点残差、相机锁定、参数保存及 JSON 导入导出。
+- 原图必须手动选择 `references-private/bmw-g20/photos/` 中对应图号的原始 JPG，按尺寸及 SHA-256 核对；不会自动读取、上传或公开目录。
+- 当前只有比例骨架，**不是宝马车模成品，完整照片叠加视觉验收尚未完成**。动力/选装代码与尺度适用性仍保留未知或假设状态。
+- 记录：[阶段 1 验证](docs/research/bmw-g20/stage1-qa.md)、[相机数值报告](docs/research/bmw-g20/stage1-camera-report.json)、[完整开发计划](docs/plans/2026-10-03-bmw-g20-complex-modeling-plan.md)。
+
+以下为保留的 A4 基线说明。
+
 **状态：v0.6 车头真实开口 / 灯腔 / 格栅厚度 / 前缘曲面精修，沿用 v0.2 官方资料库与四视等比校准；仍不是写实车模成品。**
 
 本轮切开前灯、格栅和侧进气口处的车身蒙皮，加入内壁、背板、实体横条、反射杯、透镜与透明外罩；收紧前端圆角并降低前角鼓包。先看 [v0.6 依据、改动与验证](docs/research/2026-10-03-a4-v06-qa.md)。此前 [v0.5 座舱精修](docs/research/2026-10-03-a4-v05-comparison.md)、[v0.4 曲面对照](docs/research/2026-10-02-a4-v04-comparison.md)、[v0.3 大形对照](docs/research/2026-10-02-a4-v03-comparison.md) 保留。
@@ -25,7 +37,7 @@ npm run build  # TypeScript 检查 + 生产构建
 npm run preview
 ```
 
-仅监听本机回环地址，未部署到公网。开发服务拒绝读取 `.env`、`.git`、`.runtime`、`tmp` 和 `docs` 目录。
+仅监听本机回环地址，未部署到公网。开发服务拒绝读取 `.env`、`.git`、`.runtime`、`tmp`、`docs` 和 `references-private` 目录。
 
 ## 已实现
 

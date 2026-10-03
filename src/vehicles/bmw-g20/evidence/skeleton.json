@@ -1,0 +1,259 @@
+{
+  "id": "bmw-g20-stage1-skeleton-v1",
+  "coordinateSystem": "metres; -X front; +Y up; +Z vehicle left; origin axle midpoint on ground",
+  "note": "仅比例/相机实验；全部点为近似，hub 是可见轮毂外端面中心，不是官方轮距定义的轮胎中面。不同照片不改变骨架。",
+  "points": {
+    "hub-front-left": [
+      -1.4255,
+      0.3313,
+      0.866
+    ],
+    "hub-front-right": [
+      -1.4255,
+      0.3313,
+      -0.866
+    ],
+    "hub-rear-left": [
+      1.4255,
+      0.3313,
+      0.866
+    ],
+    "hub-rear-right": [
+      1.4255,
+      0.3313,
+      -0.866
+    ],
+    "nose-left": [
+      -2.2255,
+      0.46,
+      0.74
+    ],
+    "nose-right": [
+      -2.2255,
+      0.46,
+      -0.74
+    ],
+    "bonnet-front-left": [
+      -2.03,
+      0.82,
+      0.74
+    ],
+    "bonnet-front-right": [
+      -2.03,
+      0.82,
+      -0.74
+    ],
+    "wind-bottom-left": [
+      -0.66,
+      0.978,
+      0.716
+    ],
+    "wind-bottom-right": [
+      -0.66,
+      0.978,
+      -0.716
+    ],
+    "wind-top-left": [
+      -0.18,
+      1.372,
+      0.618
+    ],
+    "wind-top-right": [
+      -0.18,
+      1.372,
+      -0.618
+    ],
+    "roof-rear-left": [
+      0.86,
+      1.405,
+      0.628
+    ],
+    "roof-rear-right": [
+      0.86,
+      1.405,
+      -0.628
+    ],
+    "rear-window-left": [
+      1.63,
+      1,
+      0.728
+    ],
+    "rear-window-right": [
+      1.63,
+      1,
+      -0.728
+    ],
+    "tail-left": [
+      2.4875,
+      0.85,
+      0.76
+    ],
+    "tail-right": [
+      2.4875,
+      0.85,
+      -0.76
+    ],
+    "tail-low-left": [
+      2.39,
+      0.3,
+      0.81
+    ],
+    "tail-low-right": [
+      2.39,
+      0.3,
+      -0.81
+    ],
+    "sill-rear-left": [
+      1.82,
+      0.24,
+      0.9
+    ],
+    "sill-rear-right": [
+      1.82,
+      0.24,
+      -0.9
+    ],
+    "sill-front-left": [
+      -1.84,
+      0.24,
+      0.9
+    ],
+    "sill-front-right": [
+      -1.84,
+      0.24,
+      -0.9
+    ],
+    "bonnet-badge": [
+      -2.12,
+      0.79,
+      0
+    ],
+    "roof-apex": [
+      0.4,
+      1.445,
+      0
+    ]
+  },
+  "lines": [
+    [
+      "nose-left",
+      "bonnet-front-left",
+      "wind-bottom-left",
+      "wind-top-left",
+      "roof-rear-left",
+      "rear-window-left",
+      "tail-left",
+      "tail-low-left",
+      "sill-rear-left",
+      "sill-front-left",
+      "nose-left"
+    ],
+    [
+      "wind-bottom-left",
+      "rear-window-left"
+    ],
+    [
+      "hub-front-left",
+      "hub-rear-left"
+    ],
+    [
+      "nose-right",
+      "bonnet-front-right",
+      "wind-bottom-right",
+      "wind-top-right",
+      "roof-rear-right",
+      "rear-window-right",
+      "tail-right",
+      "tail-low-right",
+      "sill-rear-right",
+      "sill-front-right",
+      "nose-right"
+    ],
+    [
+      "wind-bottom-right",
+      "rear-window-right"
+    ],
+    [
+      "hub-front-right",
+      "hub-rear-right"
+    ],
+    [
+      "nose-left",
+      "nose-right"
+    ],
+    [
+      "bonnet-front-left",
+      "bonnet-front-right"
+    ],
+    [
+      "wind-bottom-left",
+      "wind-bottom-right"
+    ],
+    [
+      "wind-top-left",
+      "wind-top-right"
+    ],
+    [
+      "roof-rear-left",
+      "roof-rear-right"
+    ],
+    [
+      "rear-window-left",
+      "rear-window-right"
+    ],
+    [
+      "tail-left",
+      "tail-right"
+    ],
+    [
+      "hub-front-left",
+      "hub-front-right"
+    ],
+    [
+      "hub-rear-left",
+      "hub-rear-right"
+    ]
+  ],
+  "constraints": [
+    {
+      "id": "wheelbase-study",
+      "value": 2.851,
+      "unit": "m",
+      "kind": "approximation",
+      "refs": [
+        {
+          "sourceId": "BMW2024_SPECS",
+          "page": 11
+        }
+      ],
+      "tolerance": 0.015
+    },
+    {
+      "id": "height-study",
+      "value": 1.445,
+      "unit": "m",
+      "kind": "approximation",
+      "refs": [
+        {
+          "sourceId": "BMW2024_SPECS",
+          "page": 11
+        }
+      ],
+      "tolerance": 0.035
+    },
+    {
+      "id": "wheel-radius-unloaded",
+      "value": 0.3313,
+      "unit": "m",
+      "kind": "approximation",
+      "refs": [
+        {
+          "sourceId": "P90549638",
+          "region": "225/40 R19 胎侧；忽略载荷变形"
+        }
+      ],
+      "tolerance": 0.015
+    }
+  ],
+  "wheelRadius": 0.3313
+}
