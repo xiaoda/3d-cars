@@ -14,14 +14,14 @@ describe('BMW 局部曲面小样',()=>{
   it('共边、法线、三角形通过；所有开放边有明确的截断/开口用途',()=>{
     const model=buildFrontCorner();expect(model.diagnostics.maxGap).toBeLessThan(1e-7);
     expect(model.diagnostics.maxSmoothAngleDeg).toBeLessThan(1);
-    expect([...model.diagnostics.boundaries].sort()).toEqual(Object.keys(FRONT_CORNER_DATA.boundaryPolicy).sort());
+    expect([...model.diagnostics.boundaries].sort()).toEqual(Object.keys(model.boundaryPolicy).sort());
     expect(model.triangleCount).toBeLessThan(30000);expect(model.triangleCount).toBeGreaterThan(1000);
     model.dispose();
   });
   it('左右镜像位置及法线正确，不靠负缩放或 DoubleSide 隐藏反面',()=>{
     const model=buildFrontCorner();const meshes=model.group.children.filter(o=>o instanceof Mesh) as Mesh[];
     const left=meshes.filter(o=>o.name.endsWith('-left')),right=meshes.filter(o=>o.name.endsWith('-right'));
-    expect(left.length).toBe(12);expect(right.length).toBe(12);
+    expect(left.length).toBe(13);expect(right.length).toBe(13);
     left.forEach((mesh,i)=>{const a=mesh.geometry.getAttribute('position'),b=right[i].geometry.getAttribute('position'),an=mesh.geometry.getAttribute('normal'),bn=right[i].geometry.getAttribute('normal');
       for(let j=0;j<a.count;j++){expect(a.getX(j)).toBe(b.getX(j));expect(a.getY(j)).toBe(b.getY(j));expect(a.getZ(j)).toBeCloseTo(-b.getZ(j),8);expect(an.getZ(j)).toBeCloseTo(-bn.getZ(j),8);}
       const ai=mesh.geometry.index!.array,bi=right[i].geometry.index!.array;
@@ -42,7 +42,7 @@ describe('BMW 局部曲面小样',()=>{
   it('局部拱度只改变机盖面内，灯口/外边保持原位，恢复可再生同一网格',()=>{
     const base=makeFrontCornerPatches(0),edited=makeFrontCornerPatches(.04);
     expect(base.patches[0].points).not.toEqual(edited.patches[0].points);
-    for(let i=2;i<base.patches.length;i++)expect(base.patches[i]).toEqual(edited.patches[i]);
+    for(const p of base.patches.filter(p=>!p.id.startsWith('hood-')))expect(p).toEqual(edited.patches.find(e=>e.id===p.id));
     const a=buildFrontCorner(.04),negative=buildFrontCorner(-.04),b=buildFrontCorner(0),c=buildFrontCorner(0);
     expect(a.diagnostics.maxSmoothAngleDeg).toBeLessThan(1);
     const positions=(m:ReturnType<typeof buildFrontCorner>)=>(m.group.children[0] as Mesh).geometry.getAttribute('position').array;

@@ -3,6 +3,7 @@ import {createBmwStudy,type BmwViewSettings,type FrontCornerStats,type FrontView
 import {BASE_CAMERAS,PHOTOS,STORAGE_KEY,defaultState,parseStudyState,pointResiduals,summarizeResiduals,verifyReferenceMeta} from '../vehicles/bmw-g20/studyData';
 import {ALTERNATIVE_CAMERAS,applyCameraChoice,identifyCameraChoice} from '../vehicles/bmw-g20/cameraReview';
 import {parseCamera,type PhotoCamera} from '../modeling/projection';
+import type {FrontCornerRevision} from '../vehicles/bmw-g20/frontCorner';
 import './bmw-workspace.css';
 
 function loadSaved(){
@@ -21,6 +22,7 @@ export default function BmwModelingWorkspace(){
   const [object,setObject]=useState<BmwViewSettings['object']>('surface'),[inspection,setInspection]=useState<BmwViewSettings['inspection']>('free');
   const [surfaceMode,setSurfaceMode]=useState<BmwViewSettings['surfaceMode']>('clay'),[controlNet,setControlNet]=useState(false),[bulge,setBulge]=useState(0),[surfaceOpacity,setSurfaceOpacity]=useState(.65);
   const [surfaceStats,setSurfaceStats]=useState<FrontCornerStats|null>(null);
+  const [revision,setRevision]=useState<FrontCornerRevision>('refined');
   const [notice,setNotice]=useState(initial.notice),[error,setError]=useState(''),[ready,setReady]=useState(false);
   const [imageStatus,setImageStatus]=useState('未载入原图'),[loading,setLoading]=useState(false);
   const host=useRef<HTMLDivElement>(null),engine=useRef<ReturnType<typeof createBmwStudy>|null>(null);
@@ -33,7 +35,7 @@ export default function BmwModelingWorkspace(){
   const cameraChoice=identifyCameraChoice(camera),alternatives=ALTERNATIVE_CAMERAS.filter(c=>c.sourceId===sourceId);
   const baseline=BASE_CAMERAS.find(c=>c.sourceId===sourceId)!;
   const baselineRms=useMemo(()=>summarizeResiduals(pointResiduals(photo,baseline)).rmsPx,[photo,baseline]);
-  const settings={photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity};
+  const settings={photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity,revision};
   const latest=useRef(settings);latest.current=settings;
   useEffect(()=>{
     alive.current=true;
@@ -41,7 +43,7 @@ export default function BmwModelingWorkspace(){
     catch(e){setError(e instanceof Error?e.message:String(e));}
     return()=>{alive.current=false;pending.current++;engine.current?.dispose();engine.current=null;if(imageUrl.current)URL.revokeObjectURL(imageUrl.current);imageUrl.current=null;};
   },[]);
-  useEffect(()=>{engine.current?.update({photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity});},[photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity]);
+  useEffect(()=>{engine.current?.update({photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity,revision});},[photo,camera,mode,opacity,points,silhouette,object,inspection,surfaceMode,controlNet,bulge,surfaceOpacity,revision]);
   useEffect(()=>{
     pending.current++;engine.current?.setImage(null);setImageStatus('未载入原图');setLoading(false);setLocked(true);
     if(imageUrl.current)URL.revokeObjectURL(imageUrl.current);imageUrl.current=null;
@@ -79,7 +81,7 @@ export default function BmwModelingWorkspace(){
     catch(e){if(alive.current)setNotice(`导入失败：${e instanceof Error?e.message:String(e)}`);}
   }
   return <main className="bmw-workspace">
-    <div className="bmw-heading"><div><span className="bmw-eyebrow">NO. 002 / SURFACE PROOF</span><h1>BMW <em>G20</em><span>机盖 · 灯角 · 翼子板</span></h1></div><p>阶段 02 · 分区曲面技术小样<br/><strong>局部白模，不是完整车头</strong></p></div>
+    <div className="bmw-heading"><div><span className="bmw-eyebrow">NO. 002 / SURFACE PROOF</span><h1>BMW <em>G20</em><span>机盖 · 灯角 · 翼子板</span></h1></div><p>阶段 02 · 局部修正第 1 轮<br/><strong>局部白模，不是完整车头</strong></p></div>
     <div className="bmw-layout">
       <aside className="bmw-controls" aria-label="宝马对比控制">
         <section><h2><b>01</b> 参考机位</h2><div className="bmw-photo-options">{PHOTOS.map((p,i)=><button key={p.sourceId} aria-pressed={p.sourceId===sourceId&&inspection==='photo'} onClick={()=>{setSourceId(p.sourceId);setInspection('photo');setNotice('');}}><span>{String(i+1).padStart(2,'0')}</span><div>{p.title}<small>{p.sourceId} · {i===2?'仅定性参考':'临时工作机位'}</small></div><i>↗</i></button>)}</div>
@@ -109,13 +111,14 @@ export default function BmwModelingWorkspace(){
         <div className="bmw-panel-heading"><div><span className="bmw-eyebrow">{inspection==='free'?'LOCAL SURFACE / ORBIT':`${sourceId} / PERSPECTIVE`}</span><h2>{inspection==='free'?'局部白模 · 自由检查':photo.title}</h2></div><div className="bmw-panel-status">{inspection==='free'?'独立自由相机':locked?'相机已锁定':'相机编辑中'}<small>{imageStatus}</small></div></div>
         <div className="bmw-surface-tools">
           <div className="bmw-tool-row"><div className="bmw-modes" aria-label="研究对象">{([{id:'surface',label:'局部曲面'},{id:'skeleton',label:'骨架'}] as const).map(o=><button key={o.id} aria-pressed={object===o.id} onClick={()=>setObject(o.id)}>{o.label}</button>)}</div><div className="bmw-modes" aria-label="观察方式"><button aria-pressed={inspection==='free'} onClick={()=>setInspection('free')}>自由检查</button><button aria-pressed={inspection==='photo'} onClick={()=>setInspection('photo')}>照片对照</button></div></div>
-          {object==='surface'&&<><div className="bmw-tool-row"><div className="bmw-modes" aria-label="曲面诊断">{([{id:'clay',label:'白模'},{id:'normals',label:'法线'},{id:'stripes',label:'反射条纹'}] as const).map(m=><button key={m.id} aria-pressed={surfaceMode===m.id} onClick={()=>setSurfaceMode(m.id)}>{m.label}</button>)}</div><label className="bmw-check"><input type="checkbox" checked={controlNet} onChange={e=>setControlNet(e.target.checked)}/> 控制网</label></div>
-          <details className="bmw-bulge"><summary>局部控制实验 · 不改变灯口边界</summary><label className="bmw-range">机盖内部控制点高度 <output>{Math.round(bulge*1000)} mm</output><input aria-label="机盖拱度实验" type="range" min="-.04" max=".04" step=".005" value={bulge} onChange={e=>setBulge(Number(e.target.value))}/></label><button onClick={()=>setBulge(0)}>恢复曲面基线</button><p>只改变同一母面内部两点，随后精确分区；不是实车尺寸参数，不保存实验值。</p></details></>}
+          {object==='surface'&&<><div className="bmw-revision-review"><div className="bmw-modes" aria-label="曲面版本比较">{([{id:'baseline',label:'原始小样'},{id:'refined',label:'本轮修正'}] as const).map(v=><button key={v.id} aria-pressed={revision===v.id} onClick={()=>{setRevision(v.id);setBulge(0);setNotice('已切换曲面版本并归零拱度实验；相机、原图、诊断模式与透明度保持不变。');}}>{v.label}</button>)}</div><p>同机位比较：机盖特征带 · 灯口外角 · 翼子板肩部。仅改控制网，不代表视觉验收通过。</p></div>
+          <div className="bmw-tool-row"><div className="bmw-modes" aria-label="曲面诊断">{([{id:'clay',label:'白模'},{id:'normals',label:'法线'},{id:'stripes',label:'反射条纹'}] as const).map(m=><button key={m.id} aria-pressed={surfaceMode===m.id} onClick={()=>setSurfaceMode(m.id)}>{m.label}</button>)}</div><label className="bmw-check"><input type="checkbox" checked={controlNet} onChange={e=>setControlNet(e.target.checked)}/> 控制网</label></div>
+          <details className="bmw-bulge"><summary>局部控制实验 · 不改变灯口边界</summary><label className="bmw-range">机盖内部控制点高度 <output>{Math.round(bulge*1000)} mm</output><input aria-label="机盖拱度实验" type="range" min="-.04" max=".04" step=".005" value={bulge} onChange={e=>setBulge(Number(e.target.value))}/></label><button onClick={()=>setBulge(0)}>恢复曲面基线</button><p>只改变母面内部两点，再按当前版本分区；本轮特征带修正独立保留。恢复按钮归零实验，不切换版本；不是实车尺寸参数，不保存实验值。</p></details></>}
           {inspection==='free'&&<div className="bmw-free-views">{([{id:'left',label:'左前高位'},{id:'right',label:'右前高位'},{id:'front',label:'正前'},{id:'side',label:'侧前'},{id:'back',label:'背面'}] as {id:FrontView;label:string}[]).map(v=><button key={v.id} onClick={()=>engine.current?.setFreeView(v.id)}>{v.label}</button>)}<small>拖动旋转 · 滚轮缩放</small></div>}
         </div>
         <div className="bmw-viewport-wrap"><div className="bmw-canvas" ref={host}/>{inspection==='photo'&&imageStatus==='未载入原图'&&<div className="bmw-empty-note">{mode==='reference'?'原图尚未载入，当前仅显示已开启的标注':`当前仅显示${object==='surface'?'局部曲面':'共用骨架'}和已有标注`}<br/><span>选择原图后进行同角度叠加，不会自动读取本机文件</span></div>}{error&&<div className="bmw-error" role="alert">{error}</div>}</div>
         <div className="bmw-legend"><span><i className={object==='surface'?'bmw-surface-key':'bmw-cyan'}/>{object==='surface'?'局部曲面 · 双侧镜像':'共用三维骨架'}</span>{inspection==='photo'?<><span><i className="bmw-amber"/>人工二维锚点</span><span><i className="bmw-red"/>骨架重投影残差</span></>:<span>自由视角不计算照片误差</span>}<small>−X 车头 · +Y 向上 · +Z 左侧 · m</small></div>
-        {surfaceStats&&object==='surface'&&<div className="bmw-surface-stats"><span>{surfaceStats.patchCount} 块面片 · {surfaceStats.triangles.toLocaleString()} 三角面</span><span>共边差 {surfaceStats.maxGap.toExponential(1)} m</span><span>光滑接边法线差 {surfaceStats.maxSmoothAngleDeg.toFixed(4)}°</span><p>这里只验证声明的接边。灯口贯通；双肾、保险杠、完整轮拱及灯内件未建。条纹是诊断图，不是实车反射仿真。</p></div>}
+        {surfaceStats&&object==='surface'&&<div className="bmw-surface-stats"><span>{surfaceStats.revision==='refined'?'本轮修正 R1':'原始小样 V1'} · {surfaceStats.patchCount} 块面片 · {surfaceStats.triangles.toLocaleString()} 三角面</span><span>共边差 {surfaceStats.maxGap.toExponential(1)} m</span><span>光滑接边法线差 {surfaceStats.maxSmoothAngleDeg.toFixed(4)}°</span><p>这里只验证声明的接边。灯口贯通；双肾、保险杠、完整轮拱及灯内件未建。条纹是诊断图，不是实车反射仿真。</p></div>}
         {inspection==='photo'&&<><div className="bmw-metrics"><div><span>骨架锚点 RMS</span><strong>{rms===null?'—':rms.toFixed(1)}<small>px</small></strong></div><div><span>相对车身 ROI 宽</span><strong>{rms===null?'—':(rms/photo.roi.width*100).toFixed(2)}<small>%</small></strong></div><div><span>画内 / 固定对应点</span><strong>{summary.inFrameCount}<small>/ {summary.requiredCount}</small></strong></div><p>这是<strong>旧骨架的相机拟合残差</strong>，不是新增曲面的形状精度。曲面修改不会降低这个数值，不能据此判断还原度。</p></div>
         <div className="bmw-review-status" data-status={summary.status} role="status">{reviewMessage}{sourceId==='P90549635'&&<p>近侧机位只有 4 个对应点；原基线焦距位于试验下界。本轮发现另一低机位候选与明显选点敏感性，请在相机参数区比较，不能仅按 RMS 决定。</p>}</div>
         <details className="bmw-residuals"><summary>逐点残差与标注重复性</summary><table><thead><tr><th>锚点</th><th>状态</th><th>残差 / px</th><th>重复选点差 / px</th></tr></thead><tbody>{residuals.map((p,i)=><tr key={p.id}><td>{i+1}. {p.id}</td><td>{reasonLabels[p.reason]}</td><td>{p.required&&p.errorPx!==null?p.errorPx.toFixed(1):'—'}</td><td>{photo.points[i].repeatDeltaPx.toFixed(1)}</td></tr>)}</tbody></table></details></>}

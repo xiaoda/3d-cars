@@ -3,11 +3,11 @@ import {BMW_STUDY} from '../vehicles/bmw-g20/config';
 import {BASE_CAMERAS,PHOTOS,pointResiduals,type PhotoDefinition} from '../vehicles/bmw-g20/studyData';
 import {makePhotoCamera,type PhotoCamera} from '../modeling/projection';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-import {buildFrontCorner} from '../vehicles/bmw-g20/frontCorner';
+import {buildFrontCorner,type FrontCornerRevision} from '../vehicles/bmw-g20/frontCorner';
 import {addSurfaceLights,createSurfaceMaterials,type SurfaceMode} from './bmwFrontCorner';
 
-export type BmwViewSettings={photo:PhotoDefinition;camera:PhotoCamera;mode:'overlay'|'skeleton'|'reference';opacity:number;points:boolean;silhouette:boolean;object:'skeleton'|'surface';inspection:'photo'|'free';surfaceMode:SurfaceMode;controlNet:boolean;bulge:number;surfaceOpacity:number};
-export type FrontCornerStats={patchCount:number;triangles:number;maxGap:number;maxSmoothAngleDeg:number};
+export type BmwViewSettings={photo:PhotoDefinition;camera:PhotoCamera;mode:'overlay'|'skeleton'|'reference';opacity:number;points:boolean;silhouette:boolean;object:'skeleton'|'surface';inspection:'photo'|'free';surfaceMode:SurfaceMode;controlNet:boolean;bulge:number;surfaceOpacity:number;revision:FrontCornerRevision};
+export type FrontCornerStats={patchCount:number;triangles:number;maxGap:number;maxSmoothAngleDeg:number;revision:FrontCornerRevision};
 export type FrontView='left'|'right'|'front'|'side'|'back';
 /** 只有骨架线和圆形轮心占位，没有借用 A4 车身或加入任何精细车头。 */
 export function buildBmwSkeleton(){
@@ -40,8 +40,8 @@ export function createBmwStudy(host:HTMLElement,onError:(message:string)=>void,o
   controls.enableDamping=false;controls.minDistance=.6;controls.maxDistance=15;controls.target.set(-1.43,.8,0);freeCamera.position.set(-3.8,2.0,3.0);controls.update();
   renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
   let disposed=false,lost=false,reference:HTMLImageElement|null=null;
-  let settings:BmwViewSettings={photo:PHOTOS[0],camera:BASE_CAMERAS[0],mode:'overlay',opacity:.75,points:true,silhouette:false,object:'surface',inspection:'free',surfaceMode:'clay',controlNet:false,bulge:0,surfaceOpacity:.65};
-  const report=()=>onStats?.({patchCount:surface.patches.length*2,triangles:surface.triangleCount,maxGap:surface.diagnostics.maxGap,maxSmoothAngleDeg:surface.diagnostics.maxSmoothAngleDeg});
+  let settings:BmwViewSettings={photo:PHOTOS[0],camera:BASE_CAMERAS[0],mode:'overlay',opacity:.75,points:true,silhouette:false,object:'surface',inspection:'free',surfaceMode:'clay',controlNet:false,bulge:0,surfaceOpacity:.65,revision:'refined'};
+  const report=()=>onStats?.({patchCount:surface.patches.length*2,triangles:surface.triangleCount,maxGap:surface.diagnostics.maxGap,maxSmoothAngleDeg:surface.diagnostics.maxSmoothAngleDeg,revision:surface.revision});
   host.appendChild(canvas);
   function draw(){
     if(disposed||lost||!context)return;
@@ -99,7 +99,14 @@ export function createBmwStudy(host:HTMLElement,onError:(message:string)=>void,o
   return {
     update(next:BmwViewSettings){
       if(next.photo.sourceId!==settings.photo.sourceId)reference=null;
-      if(next.bulge!==settings.bulge){try{const replacement=buildFrontCorner(next.bulge);scene.remove(surface.group,surface.controlGroup);surface.dispose();surface=replacement;scene.add(surface.group,surface.controlGroup);report();}catch(e){onError(e instanceof Error?e.message:String(e));return;}}
+      if(next.bulge!==settings.bulge||next.revision!==settings.revision){
+        try{
+          const replacement=buildFrontCorner(next.bulge,24,next.revision);
+          scene.remove(surface.group,surface.controlGroup);surface.dispose();surface=replacement;
+          scene.add(surface.group,surface.controlGroup);report();
+        }catch(e){onError(`曲面更新失败，保留上一个可用模型：${e instanceof Error?e.message:String(e)}`);return;}
+      }
+      if(!lost)onError('');
       settings=next;draw();
     },
     setFreeView(view:FrontView){
