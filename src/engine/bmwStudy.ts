@@ -60,9 +60,10 @@ export function createBmwStudy(host:HTMLElement,onError:(message:string)=>void){
     if(settings.points){
       const residuals=pointResiduals(settings.photo,settings.camera);
       residuals.forEach((p,i)=>{
-        const ax=x+p.target[0]*scale,ay=y+p.target[1]*scale,bx=x+p.predicted[0]*scale,by=y+p.predicted[1]*scale;
+        const ax=x+p.target[0]*scale,ay=y+p.target[1]*scale;
         c.lineWidth=1.4*dpr;
-        if(p.usable&&settings.mode!=='reference'){
+        if(p.usable&&p.predicted&&settings.mode!=='reference'){
+          const bx=x+p.predicted[0]*scale,by=y+p.predicted[1]*scale;
           c.strokeStyle='#fb857b';c.beginPath();c.moveTo(ax,ay);c.lineTo(bx,by);c.stroke();
           c.strokeStyle='#80f7e3';c.beginPath();c.moveTo(bx-5*dpr,by);c.lineTo(bx+5*dpr,by);c.moveTo(bx,by-5*dpr);c.lineTo(bx,by+5*dpr);c.stroke();
         }

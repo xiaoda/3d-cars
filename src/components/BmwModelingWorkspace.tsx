@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {createBmwStudy,type BmwViewSettings} from '../engine/bmwStudy';
-import {BASE_CAMERAS,PHOTOS,STORAGE_KEY,defaultState,parseStudyState,pointResiduals,verifyReferenceMeta} from '../vehicles/bmw-g20/studyData';
+import {BASE_CAMERAS,PHOTOS,STORAGE_KEY,defaultState,parseStudyState,pointResiduals,summarizeResiduals,verifyReferenceMeta} from '../vehicles/bmw-g20/studyData';
 import {parseCamera,type PhotoCamera} from '../modeling/projection';
 import './bmw-workspace.css';
 
@@ -23,7 +23,9 @@ export default function BmwModelingWorkspace(){
   const pending=useRef(0),alive=useRef(false),imageUrl=useRef<string|null>(null);
   const photo=PHOTOS.find(p=>p.sourceId===sourceId)!,camera=study.cameras.find(c=>c.sourceId===sourceId)!;
   const residuals=useMemo(()=>pointResiduals(photo,camera),[photo,camera]);
-  const usable=residuals.filter(p=>p.usable),rms=usable.length?Math.sqrt(usable.reduce((s,p)=>s+p.errorPx**2,0)/usable.length):null;
+  const summary=summarizeResiduals(residuals),rms=summary.rmsPx;
+  const reviewMessage=summary.status==='complete'?'固定对应点均在画内；仅表示可以计算误差，不代表相机视觉验收通过。':summary.status==='outside-frame'?'存在画外投影或被裁掉的标注：仍按全部固定对应点计算 RMS，不能靠隐藏误差点过关。':summary.status==='invalid-projection'?'必需点位于相机平面、背面或深度范围外：整组 RMS 不可用，请恢复或修正相机。':'没有可评估的固定对应点。';
+  const reasonLabels:Record<string,string>={'ok':'画内','outside-frame':'画外 / 裁剪外','depth-clipped':'深度范围外','non-projectable':'不可投影','excluded':'预先排除'};
   const changed=JSON.stringify(camera)!==JSON.stringify(BASE_CAMERAS.find(c=>c.sourceId===sourceId));
   const settings={photo,camera,mode,opacity,points,silhouette};
   const latest=useRef(settings);latest.current=settings;
@@ -89,10 +91,11 @@ export default function BmwModelingWorkspace(){
       </aside>
       <section className="bmw-panel" aria-label="宝马相机与骨架对比">
         <div className="bmw-panel-heading"><div><span className="bmw-eyebrow">{sourceId} / PERSPECTIVE</span><h2>{photo.title}</h2></div><div className="bmw-panel-status">{locked?'相机已锁定':'相机编辑中'}<small>{imageStatus}</small></div></div>
-        <div className="bmw-viewport-wrap"><div className="bmw-canvas" ref={host}/>{imageStatus==='未载入原图'&&<div className="bmw-empty-note">当前显示共用骨架和已有标注<br/><span>选择原图后进行同角度叠加，不会自动读取本机文件</span></div>}{error&&<div className="bmw-error" role="alert">{error}</div>}</div>
+        <div className="bmw-viewport-wrap"><div className="bmw-canvas" ref={host}/>{imageStatus==='未载入原图'&&<div className="bmw-empty-note">{mode==='reference'?'原图尚未载入，当前仅显示已开启的标注':'当前显示共用骨架和已有标注'}<br/><span>选择原图后进行同角度叠加，不会自动读取本机文件</span></div>}{error&&<div className="bmw-error" role="alert">{error}</div>}</div>
         <div className="bmw-legend"><span><i className="bmw-cyan"/>共用三维骨架</span><span><i className="bmw-amber"/>人工二维锚点</span><span><i className="bmw-red"/>重投影残差</span><small>−X 车头 · +Y 向上 · +Z 左侧 · m</small></div>
-        <div className="bmw-metrics"><div><span>锚点 RMS</span><strong>{rms===null?'—':rms.toFixed(1)}<small>px</small></strong></div><div><span>相对车身 ROI 宽</span><strong>{rms===null?'—':(rms/photo.roi.width*100).toFixed(2)}<small>%</small></strong></div><div><span>有效对应点</span><strong>{usable.length}<small>/ {residuals.length}</small></strong></div><p>这是<strong>近似骨架的拟合内残差</strong>，不是车身表面精度或独立验证。没有精细模型，不能据此判断还原度。</p></div>
-        <details className="bmw-residuals"><summary>逐点残差与标注重复性</summary><table><thead><tr><th>锚点</th><th>残差 / px</th><th>重复选点差 / px</th></tr></thead><tbody>{residuals.map((p,i)=><tr key={p.id}><td>{i+1}. {p.id}</td><td>{p.usable?p.errorPx.toFixed(1):'不可用'}</td><td>{photo.points[i].repeatDeltaPx.toFixed(1)}</td></tr>)}</tbody></table></details>
+        <div className="bmw-metrics"><div><span>固定锚点 RMS</span><strong>{rms===null?'—':rms.toFixed(1)}<small>px</small></strong></div><div><span>相对车身 ROI 宽</span><strong>{rms===null?'—':(rms/photo.roi.width*100).toFixed(2)}<small>%</small></strong></div><div><span>画内 / 固定对应点</span><strong>{summary.inFrameCount}<small>/ {summary.requiredCount}</small></strong></div><p>这是<strong>近似骨架的拟合内残差</strong>，不是车身表面精度或独立验证。没有精细模型，不能据此判断还原度。</p></div>
+        <div className="bmw-review-status" data-status={summary.status} role="status">{reviewMessage}{sourceId==='P90549635'&&<p>近侧机位只有 4 个对应点；初值焦距位于试验下界，姿态与深度约束较弱，必须重点叠图复核。</p>}</div>
+        <details className="bmw-residuals"><summary>逐点残差与标注重复性</summary><table><thead><tr><th>锚点</th><th>状态</th><th>残差 / px</th><th>重复选点差 / px</th></tr></thead><tbody>{residuals.map((p,i)=><tr key={p.id}><td>{i+1}. {p.id}</td><td>{reasonLabels[p.reason]}</td><td>{p.required&&p.errorPx!==null?p.errorPx.toFixed(1):'—'}</td><td>{photo.points[i].repeatDeltaPx.toFixed(1)}</td></tr>)}</tbody></table></details>
         <div className="bmw-notice" role="status">{notice||'研究状态：原厂动力及选装仍未知；当前三个机位共用一套骨架。'}</div>
       </section>
     </div>

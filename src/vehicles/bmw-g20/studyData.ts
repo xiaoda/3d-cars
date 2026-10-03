@@ -24,11 +24,26 @@ export function verifyReferenceMeta(actual:{width:number;height:number;sha256:st
   if(actual.sha256!==photo.sha256)throw new Error('图片 SHA-256 不符；已拒绝将其他照片套入当前相机');
 }
 export function pointResiduals(photo:PhotoDefinition,camera:PhotoCamera){
+  if(photo.sourceId!==camera.sourceId||photo.imageWidth!==camera.imageWidth||photo.imageHeight!==camera.imageHeight)throw new Error('标注与相机的来源或原图尺寸不一致');
   return photo.points.map(p=>{
-    const predicted=projectPoint(BMW_STUDY.points[p.id],camera,p.visibility as 'visible');
+    if(!['visible','occluded','uncertain'].includes(p.visibility))throw new Error('标注可见性无效');
+    const predicted=projectPoint(BMW_STUDY.points[p.id],camera,p.visibility as 'visible'|'occluded'|'uncertain');
     const target:Vec2=[p.pixel[0]-camera.crop.x,p.pixel[1]-camera.crop.y];
-    return {id:p.id,predicted:predicted.pixel,target,usable:predicted.usable,errorPx:Math.hypot(predicted.pixel[0]-target[0],predicted.pixel[1]-target[1])};
+    const required=p.use==='camera'&&p.visibility==='visible';
+    const targetInFrame=target[0]>=0&&target[0]<=camera.crop.width&&target[1]>=0&&target[1]<=camera.crop.height;
+    const rawError=predicted.pixel&&predicted.inDepthRange?Math.hypot(predicted.pixel[0]-target[0],predicted.pixel[1]-target[1]):null;
+    const errorPx=rawError!==null&&Number.isFinite(rawError)?rawError:null;
+    const reason=!required?'excluded':!predicted.pixel?'non-projectable':!predicted.inDepthRange?'depth-clipped':errorPx===null?'non-projectable':!predicted.inFrame||!targetInFrame?'outside-frame':'ok';
+    return {id:p.id,predicted:predicted.pixel,target,required,reason,usable:required&&reason==='ok',errorPx};
   });
+}
+/** 分母只由原始标注决定；画外点仍计分，任一必需点不可投影就不给部分 RMS。 */
+export function summarizeResiduals(residuals:ReturnType<typeof pointResiduals>){
+  const required=residuals.filter(p=>p.required),invalid=required.filter(p=>p.errorPx===null);
+  const inFrameCount=required.filter(p=>p.usable).length;
+  const status=required.length===0?'no-correspondences':invalid.length?'invalid-projection':inFrameCount<required.length?'outside-frame':'complete';
+  const rmsPx=required.length&&!invalid.length?Math.hypot(...required.map(p=>p.errorPx!))/Math.sqrt(required.length):null;
+  return {status,requiredCount:required.length,inFrameCount,invalidCount:invalid.length,rmsPx};
 }
 export function validateStudyData():void {
   if(landmarks.skeletonId!==BMW_STUDY.id||cameras.skeletonId!==BMW_STUDY.id||PHOTOS.length!==BASE_CAMERAS.length)throw new Error('骨架版本或相机数量不一致');
